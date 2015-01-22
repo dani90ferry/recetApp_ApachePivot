@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:PrincipalWindow title="RecetApp" maximized="true"
+	xmlns:bxml="http://pivot.apache.org/bxml" xmlns:content="org.apache.pivot.wtk.content"
+	xmlns:ui="dad.recetapp.ui" xmlns="org.apache.pivot.wtk">
+
+	<Border styles="{padding:5}">
+		<TablePane>
+			<columns>
+				<TablePane.Column width="1*" />
+			</columns>
+			<TablePane.Row height="1*">
+				<TabPane>
+					<FillPane>
+						<TabPane.tabData>
+							<content:ButtonData text="Recetas" />
+						</TabPane.tabData>
+						<bxml:include bxml:id="recetasPane" src="RecetasPane.bxml" />
+					</FillPane>
+
+					<FillPane>
+						<TabPane.tabData>
+							<content:ButtonData text="Categorías" />
+						</TabPane.tabData>
+						<bxml:include src="CategoriasPane.bxml" />
+					</FillPane>
+
+					<FillPane>
+						<TabPane.tabData>
+							<content:ButtonData text="Ingredientes" />
+						</TabPane.tabData>
+						<bxml:include src="IngredientesPane.bxml" />
+					</FillPane>
+
+					<FillPane>
+						<TabPane.tabData>
+							<content:ButtonData text="Medidas" />
+						</TabPane.tabData>
+						<bxml:include src="MedidasPane.bxml" />
+					</FillPane>
+
+					<FillPane>
+						<TabPane.tabData>
+							<content:ButtonData text="Anotaciones" />
+						</TabPane.tabData>
+						<bxml:include src="AnotacionesPane.bxml" />
+					</FillPane>
+				</TabPane>
+			</TablePane.Row>
+			<TablePane.Row height="-1">
+				<FlowPane styles="{padding:5}">
+					<Label text="Recetas:" styles="{font:{bold:true}}"></Label>
+				</FlowPane>
+			</TablePane.Row>
+		</TablePane>
+	</Border>
+</ui:PrincipalWindow>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FillPane orientation="vertical" preferredHeight="400"
+	preferredWidth="600" xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns:content="org.apache.pivot.wtk.content"
+	 xmlns:ui="dad.recetapp.ui"
+	xmlns="org.apache.pivot.wtk">
+	<BoxPane>
+		<Label text="Sección:"
+			styles="{horizontalAlignment:'center', verticalAlignment:'center'}" />
+		<TextInput bxml:id="SeccionText" preferredWidth="300"></TextInput>
+
+		<PushButton buttonData="-" />
+	</BoxPane>
+
+
+	<FillPane>
+		<Border>
+			<TablePane bxml:id="tablePane1"
+				styles="{padding:1, verticalSpacing:2, showHorizontalGridLines:true,
+            horizontalSpacing:1, showVerticalGridLines:true}">
+				<columns>
+					<TablePane.Column width="100" />
+					<TablePane.Column width="100" />
+					<TablePane.Column width="100" />
+				</columns>
+
+				<TablePane.Row>
+					<Label text="Cantidad" styles="{horizontalAlignment:'center'}" />
+					<Label text="Medida" styles="{horizontalAlignment:'center'}" />
+					<Label text="Tipo" styles="{horizontalAlignment:'center'}" />
+				</TablePane.Row>
+
+				<TablePane.Row>
+					<Label text="Nota" styles="{verticalAlignment:'center'}" />
+				</TablePane.Row>
+
+				<TablePane.Row>
+					<Label text="Sugerencia" styles="{verticalAlignment:'center'}" />
+				</TablePane.Row>
+
+				<TablePane.Row>
+					<Label text="Comentario" styles="{verticalAlignment:'center'}" />
+				</TablePane.Row>
+			</TablePane>
+		</Border>
+		<Border>
+
+			<TablePane bxml:id="tablePane2"
+				styles="{padding:1,verticalSpacing:1, showHorizontalGridLines:true,
+            horizontalSpacing:1, showVerticalGridLines:true}">
+				<columns>
+					<TablePane.Column width="100" />
+					<TablePane.Column width="70" />
+
+				</columns>
+
+				<TablePane.Row>
+					<Label text="Orden" styles="{horizontalAlignment:'center'}" />
+					<Label text="Descripción" styles="{horizontalAlignment:'center'}" />
+
+				</TablePane.Row>
+
+				<TablePane.Row>
+					<Label text="Nota" styles="{verticalAlignment:'center'}" />
+				</TablePane.Row>
+
+				<TablePane.Row>
+					<Label text="Sugerencia" styles="{verticalAlignment:'center'}" />
+				</TablePane.Row>
+
+				<TablePane.Row>
+					<Label text="Comentario" styles="{verticalAlignment:'center'}" />
+				</TablePane.Row>
+			</TablePane>
+		</Border>
+	</FillPane>
+
+	<TablePane bxml:id="tablePanebotones"
+		styles="{padding:1,verticalSpacing:1, showHorizontalGridLines:true,
+            horizontalSpacing:1}">
+		<columns>
+			<TablePane.Column width="100" />
+			<TablePane.Column width="100" />
+			<TablePane.Column width="100" />
+
+			<TablePane.Column width="100" />
+			<TablePane.Column width="100" />
+			<TablePane.Column width="100" />
+
+		</columns>
+
+		<TablePane.Row>
+			<PushButton bxml:id="añadirButtonTable1" >
+			<content:ButtonData  icon="/dad/recetapp/ui/images/add-icon-20x20.png"/>			
+			</PushButton>
+			<PushButton bxml:id="editarButtonTable1">
+			<content:ButtonData  icon="/dad/recetapp/ui/images/edit-icon-20x20.png"/>
+			</PushButton>
+				<PushButton bxml:id="borrarButtonTable1">
+			<content:ButtonData  icon="/dad/recetapp/ui/images/delete-icon-20x20.png"/>
+			</PushButton>
+			
+
+				<PushButton bxml:id="añadirButtonTable2"  >
+			<content:ButtonData  icon="/dad/recetapp/ui/images/add-icon-20x20.png"/>			
+			</PushButton>
+			<PushButton bxml:id="editarButtonTable2">
+			<content:ButtonData  icon="/dad/recetapp/ui/images/edit-icon-20x20.png"/>
+			</PushButton>
+				<PushButton bxml:id="borrarButtonTable2">
+			<content:ButtonData  icon="/dad/recetapp/ui/images/delete-icon-20x20.png"/>
+			</PushButton>
+
+
+		</TablePane.Row>
+
+	</TablePane>
+
+
+
+
+
+</FillPane>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:RecetasPane
+	xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns:content="org.apache.pivot.wtk.content" xmlns:ui="dad.recetapp.ui"
+	xmlns="org.apache.pivot.wtk">
+
+	<columns>
+		<TablePane.Column width="1*" />
+		<TablePane.Column width="-1" />
+	</columns>
+
+	<TablePane.Row height="-1">
+
+		<Border title="Filtrar:" styles="{padding:5}">
+			<BoxPane styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
+				<Label text="Nombre:" styles="{font:{bold:true}}" />
+				<TextInput prompt="Nombre" textSize="15"></TextInput>
+				<Label text="Hasta:" styles="{font:{bold:true}}" />
+				<Spinner preferredWidth="40" selectedIndex="0">
+					<spinnerData>
+						<content:NumericSpinnerData lowerBound="0"
+							upperBound="120" increment="1" />
+					</spinnerData>
+				</Spinner>
+				<Label text="M" styles="{font:{bold:true}}" />
+				<Spinner preferredWidth="40" selectedIndex="0">
+					<spinnerData>
+						<content:NumericSpinnerData lowerBound="0"
+							upperBound="59" increment="1" />
+					</spinnerData>
+				</Spinner>
+				<Label text="S" styles="{font:{bold:true}}" />
+				<Label text="Categoría:" styles="{font:{bold:true}}" />
+				<ListButton listData="['Falta']" selectedIndex="0"
+					preferredWidth="100" />
+			</BoxPane>
+		</Border>
+
+		<BoxPane>
+			<FillPane styles="{padding:5}" orientation="vertical">
+				<PushButton bxml:id="aniadirButton" buttonData="Añadir" />
+				<PushButton buttonData="Eliminar" />
+				<PushButton buttonData="Editar" />
+			</FillPane>
+		</BoxPane>
+
+	</TablePane.Row>
+
+	<TablePane.Row height="1*">
+
+		<Border title="Recetas:" styles="{padding:5}">
+			<Border>
+				<ScrollPane horizontalScrollBarPolicy="FILL_TO_CAPACITY">
+					<TableView bxml:id="recetasTable" selectMode="MULTI">
+
+						<!-- indica las columnas (en "name" ponemos el nombre de la propiedad 
+							del objeto a listar, en este caso las de VariableItem, que son "nombre" y 
+							"valor") -->
+						<columns>
+							<TableView.Column name="nombre" width="1*"
+								headerData="Nombre" />
+							<TableView.Column name="para" width="1*"
+								headerData="Para" />
+							<TableView.Column name="tiempoTotal" width="1*"
+								headerData="Tiempo total" />
+							<TableView.Column name="fechaCreacion" width="1*"
+								headerData="Fecha de creación" />
+							<TableView.Column name="categoria" width="1*"
+								headerData="Categoría" />
+						</columns>
+
+						<!-- editor de filas -->
+						<rowEditor>
+							<!-- efectos: HORIZONTAL_SLIDE, VERTICAL_SLIDE, HORIZONTAL_FLIP, VERTICAL_FLIP, 
+								ZOOM, CROSSFADE -->
+							<content:TableViewRowEditor
+								editEffect="VERTICAL_SLIDE">
+								<cellEditors>
+									<!-- editor para la columna con "name"=nombre -->
+									<nombre>
+										<TextInput textKey="nombre" /> <!-- utiliza un TextInput para editar la celda (el textKey también es el 
+											nombre de la columna) -->
+									</nombre>
+									<!-- editor para la columna con "name"=valor -->
+									<para>
+										<TextInput textKey="para" />
+									</para>
+									<tiempoTotal>
+										<TextInput textKey="tiempoTotal" />
+									</tiempoTotal>
+									<fechaCreacion>
+										<TextInput textKey="fechaCreacion" />
+									</fechaCreacion>
+									<categoria>
+										<TextInput textKey="categoria" />
+									</categoria>
+								</cellEditors>
+							</content:TableViewRowEditor>
+						</rowEditor>
+					</TableView>
+					<columnHeader>
+						<TableViewHeader tableView="$recetasTable" />
+					</columnHeader>
+				</ScrollPane>
+			</Border>
+		</Border>
+	</TablePane.Row>
+</ui:RecetasPane>

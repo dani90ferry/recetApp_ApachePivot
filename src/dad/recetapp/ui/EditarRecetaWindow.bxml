@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:EditarRecetaWindow title="RecetApp" maximized="true"
+	xmlns:bxml="http://pivot.apache.org/bxml" xmlns:content="org.apache.pivot.wtk.content"
+	xmlns:ui="dad.recetapp.ui" xmlns="org.apache.pivot.wtk">
+	<bxml:define>
+		<Prompt bxml:id="confirmCloseTabPrompt" title="Confirm Close Tab"
+			message="Really close this tab?" options="['Cancel', 'OK']"
+			selectedOptionIndex="1" />
+	</bxml:define>
+
+	<FillPane orientation="vertical">
+		<TablePane styles="{padding:8, horizontalSpacing:6}">
+			<columns>
+				<TablePane.Column width="1*" />
+				<TablePane.Column />
+			</columns>
+
+			<TablePane.Row height="1*">
+				<Border styles="{padding:12}">
+					<BoxPane orientation="vertical">
+
+
+						<BoxPane orientation="horizontal">
+							<Label text="Nombre:"
+								styles="{horizontalAlignment:'center', verticalAlignment:'center'}" />
+
+							<TextInput preferredWidth="400"></TextInput>
+
+							<Label text="Tiempo Total:"
+								styles="{horizontalAlignment:'center', verticalAlignment:'center'}" />
+							<Spinner preferredWidth="40" selectedIndex="0">
+								<spinnerData>
+									<content:NumericSpinnerData
+										lowerBound="0" upperBound="1000" increment="1" />
+								</spinnerData>
+							</Spinner>
+							<Label text="M"
+								styles="{horizontalAlignment:'center', verticalAlignment:'center'}" />
+							<Spinner preferredWidth="40" selectedIndex="0">
+								<spinnerData>
+									<content:NumericSpinnerData
+										lowerBound="0" upperBound="59" increment="1" />
+								</spinnerData>
+							</Spinner>
+
+							<Label text="S"
+								styles="{horizontalAlignment:'center', verticalAlignment:'center'}" />
+
+						</BoxPane>
+						<BoxPane orientation="horizontal">
+							<Label text="Para:"
+								styles="{horizontalAlignment:'center', verticalAlignment:'center'}" />
+							<TextInput></TextInput>
+							<ListButton   listData="['Personas','adios']"
+								selectedIndex="0" />
+								<Label   text="                       "
+								styles="{horizontalAlignment:'center', verticalAlignment:'center'}" />
+
+							<Label   text="Tiempo Con Thermomix:"
+								styles="{horizontalAlignment:'center', verticalAlignment:'center'}" />
+							<Spinner preferredWidth="40" selectedIndex="0">
+								<spinnerData>
+									<content:NumericSpinnerData
+										lowerBound="0" upperBound="1000" increment="1" />
+								</spinnerData>
+							</Spinner>
+							<Label text="M"
+								styles="{horizontalAlignment:'center', verticalAlignment:'center'}" />
+							<Spinner preferredWidth="40" selectedIndex="0">
+								<spinnerData>
+									<content:NumericSpinnerData
+										lowerBound="0" upperBound="59" increment="1" />
+								</spinnerData>
+							</Spinner>
+							<Label text="S"
+								styles="{horizontalAlignment:'center', verticalAlignment:'center'}" />
+						</BoxPane>
+
+						<BoxPane orientation="horizontal">
+							<Label text="Categoría:"
+								styles="{horizontalAlignment:'center', verticalAlignment:'center'}" />
+
+							<ListButton preferredWidth="200"
+								listData="['Seleccione una categoría','adios']" selectedIndex="0" />
+						</BoxPane>
+
+
+
+						<TabPane bxml:id="tabPane">
+
+							<BoxPane
+								styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
+								<TabPane.tabData>
+									<content:ButtonData text="Categorías" />
+								</TabPane.tabData>
+								<Border styles="{padding:2}">									
+									<bxml:include src="ComponenteReceta.bxml" />
+								</Border>
+							</BoxPane>
+
+							
+						</TabPane>
+						<BoxPane orientation="horizontal">
+							<PushButton buttonData="Guardar Cambios" />
+							<PushButton buttonData="Cancelar" />
+						</BoxPane>
+					</BoxPane>
+				</Border>
+			</TablePane.Row>
+		</TablePane>
+		
+	</FillPane>
+</ui:EditarRecetaWindow>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:InicialWindow title="Ventana inicial" maximized="true"
+	xmlns:ui="dad.recetapp.ui" 
+	xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns:content="org.apache.pivot.wtk.content" 
+	xmlns="org.apache.pivot.wtk">
+
+	<BoxPane orientation="vertical"
+		styles="{verticalAlignment:'center',horizontalAlignment:'center'}">
+		<ImageView bxml:id="imagen" image="/dad/recetapp/ui/images/recetapp-inicio.png"></ImageView>
+	</BoxPane>
+
+</ui:InicialWindow>

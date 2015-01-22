@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:AnotacionesPane
+	xmlns:bxml="http://pivot.apache.org/bxml" 
+	xmlns:content="org.apache.pivot.wtk.content"
+	xmlns:ui="dad.recetapp.ui" 
+	xmlns="org.apache.pivot.wtk">
+	
+	<columns>
+		<TablePane.Column width="1*" />
+	</columns>
+
+	<TablePane.Row height="-1">
+		<BoxPane styles="{horizontalAlignment:'center', verticalAlignment:'center', padding:5}">
+			<Label text="Descripción:" styles="{font:{bold:true}}"/>
+			<TextInput prompt="Descripción" textSize="15"/>
+			<PushButton buttonData="Añadir" />
+			<PushButton buttonData="Eliminar" />
+		</BoxPane>
+	</TablePane.Row>
+
+	<TablePane.Row height="1*">
+	<Border>
+		<ScrollPane horizontalScrollBarPolicy="FILL_TO_CAPACITY">
+			<TableView bxml:id="descripcionView" selectMode="MULTI">
+				<columns>
+					<TableView.Column name="descripcion" width="1*" headerData="Descripción"/>
+				</columns>
+				<rowEditor>
+							<content:TableViewRowEditor
+								editEffect="VERTICAL_SLIDE">
+								<cellEditors>
+									<descripcion>
+										<TextInput textKey="descripcion" /> 
+									</descripcion>
+								</cellEditors>
+							</content:TableViewRowEditor>
+						</rowEditor>
+			</TableView>
+			<columnHeader>
+				<TableViewHeader tableView="$descripcionView"/>
+			</columnHeader>
+		</ScrollPane>
+		</Border>
+	</TablePane.Row>
+</ui:AnotacionesPane>
