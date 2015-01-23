@@ -41,7 +41,7 @@
 			<FillPane styles="{padding:5}" orientation="vertical">
 				<PushButton bxml:id="aniadirButton" buttonData="Añadir" />
 				<PushButton buttonData="Eliminar" />
-				<PushButton buttonData="Editar" />
+				<PushButton bxml:id="editarButton" buttonData="Editar" />
 			</FillPane>
 		</BoxPane>
 

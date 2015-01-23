@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <FillPane orientation="vertical" preferredHeight="400"
 	preferredWidth="600" xmlns:bxml="http://pivot.apache.org/bxml"
 	xmlns:content="org.apache.pivot.wtk.content"
@@ -101,7 +102,7 @@
 			</PushButton>
 			
 
-				<PushButton bxml:id="añadirButtonTable2"  >
+				<PushButton bxml:id="anadirButtonTable2"  >
 			<content:ButtonData  icon="/dad/recetapp/ui/images/add-icon-20x20.png"/>			
 			</PushButton>
 			<PushButton bxml:id="editarButtonTable2">

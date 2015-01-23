@@ -102,7 +102,7 @@
 						</TabPane>
 						<BoxPane orientation="horizontal">
 							<PushButton buttonData="Guardar Cambios" />
-							<PushButton buttonData="Cancelar" />
+							<PushButton bxml:id="cancelarButton" buttonData="Cancelar" />
 						</BoxPane>
 					</BoxPane>
 				</Border>

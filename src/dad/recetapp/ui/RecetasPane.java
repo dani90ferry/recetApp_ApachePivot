@@ -15,6 +15,7 @@ public class RecetasPane extends TablePane implements Bindable {
 	private RecetApp recetApp;
 	
 	@BXML private PushButton aniadirButton;
+	@BXML private PushButton editarButton;
 	
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
@@ -24,8 +25,20 @@ public class RecetasPane extends TablePane implements Bindable {
 				onAniadirButtonPressed();
 			}
 		});
+		
+		editarButton.getButtonPressListeners().add(new ButtonPressListener() {
+			@Override
+			public void buttonPressed(Button button) {
+				onEditarButtonPressed();
+			}
+		});
+		
 	}
 	
+	protected void onEditarButtonPressed() {
+		recetApp.openEditarRecetaWindow();
+	}
+
 	protected void onAniadirButtonPressed() {
 		recetApp.openNuevaRecetaWindow();
 	}

@@ -19,6 +19,11 @@ public class RecetApp implements Application{
 	private InicialWindow inicialWindow = null;	
 	private PrincipalWindow principalWindow = null;
 	private NuevaRecetaWindow nuevaRecetaWindow = null;
+	private EditarRecetaWindow editarRecetaWindow = null;
+	private NuevaInstruccionWindow nuevaInstruccionWindow = null;
+	private EditarInstruccionWindow editarInstruccionWindow = null;
+
+	
 	
 	public static Window loadWindow(String bxmlFile) throws IOException, SerializationException {
 		URL bxmlUrl = RecetApp.class.getResource(bxmlFile);
@@ -30,7 +35,7 @@ public class RecetApp implements Application{
 	public void startup(Display display, Map<String, String> properties)
 			throws Exception {
 		primaryDisplay = display;
-		openInicialWindow();
+		openInicialWindow();	
 	}
 	
 	public void openInicialWindow() {
@@ -62,11 +67,43 @@ public class RecetApp implements Application{
 		}
 	}
 	
+	
+	public void openEditarRecetaWindow() {
+		try {
+			editarRecetaWindow = (EditarRecetaWindow) loadWindow("/dad/recetapp/ui/EditarRecetaWindow.bxml");
+			editarRecetaWindow.open(primaryDisplay);
+		} catch (IOException | SerializationException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void openNuevaIntruccionWindow() {
+		try {
+			nuevaInstruccionWindow = (NuevaInstruccionWindow) loadWindow("/dad/recetapp/ui/NuevaInstruccionWindow.bxml");
+			nuevaInstruccionWindow.open(primaryDisplay);
+		} catch (IOException | SerializationException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void openEditarIntruccionWindow() {
+		try {
+			editarInstruccionWindow = (EditarInstruccionWindow) loadWindow("/dad/recetapp/ui/EditarInstruccionWindow.bxml");
+			editarInstruccionWindow.open(primaryDisplay);
+		} catch (IOException | SerializationException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	@Override
 	public boolean shutdown(boolean optional) throws Exception {
 		inicialWindow.close();
 		principalWindow.close();
 		nuevaRecetaWindow.close();
+		editarRecetaWindow.close();
+		nuevaInstruccionWindow.close();
+		editarInstruccionWindow.close();
 		return false;
 	}
 	
@@ -87,4 +124,10 @@ public class RecetApp implements Application{
 	public NuevaRecetaWindow getNuevaRecetaWindow() {
 		return nuevaRecetaWindow;
 	}
+	
+	public EditarRecetaWindow getEditarRecetaWindow() {
+		return editarRecetaWindow;
+	}
+	
+	
 }
