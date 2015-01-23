@@ -8,7 +8,6 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
-import org.apache.pivot.wtk.ImageView;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.Window;
 
