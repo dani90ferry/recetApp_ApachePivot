@@ -43,6 +43,7 @@ public class CategoriasService implements ICategoriasService {
 			statement.setString(1, categoria.getDescripcion());
 			statement.setLong(2, categoria.getId());
 			statement.executeUpdate();
+			statement.close();
 		} catch(SQLException e) {
 			throw new ServiceException("Error al modificar la categoría '" + 
 					categoria.getDescripcion(), e);
@@ -58,6 +59,7 @@ public class CategoriasService implements ICategoriasService {
 			PreparedStatement statement = conn.prepareStatement("delete from categorias where id = ?");
 			statement.setLong(1, id);
 			statement.executeUpdate();
+			statement.close();
 		} catch(SQLException e) {
 			throw new ServiceException("Error al modificar la categoría '" + 
 					id, e);
@@ -79,6 +81,7 @@ public class CategoriasService implements ICategoriasService {
 				categoria.setDescripcion(rs.getString(2));
 				aux.add(categoria);
 			}
+			statement.close();
 		} catch(SQLException e) {
 			throw new ServiceException("Error al listar las categorías", e);
 		}

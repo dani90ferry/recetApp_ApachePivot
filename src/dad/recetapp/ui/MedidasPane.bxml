@@ -12,18 +12,18 @@
 	<TablePane.Row height="-1">
 		<BoxPane styles="{horizontalAlignment:'center', verticalAlignment:'center', padding:5}">
 			<Label text="Nombre:" styles="{font:{bold:true}}"/>
-			<TextInput prompt="Nombre" textSize="15"/>
+			<TextInput bxml:id="nombreText" prompt="Nombre" textSize="15"/>
 			<Label text="Abreviatura:" styles="{font:{bold:true}}"/>
-			<TextInput prompt="Abreviatura" textSize="15"/>
-			<PushButton buttonData="Añadir" />
-			<PushButton buttonData="Eliminar" />
+			<TextInput bxml:id="abreviaturaText" prompt="Abreviatura" textSize="15"/>
+			<PushButton bxml:id="aniadirButton" buttonData="Añadir" />
+			<PushButton bxml:id="eliminarButton" buttonData="Eliminar" />
 		</BoxPane>
 	</TablePane.Row>
 
 	<TablePane.Row height="1*">
 	<Border>
 		<ScrollPane horizontalScrollBarPolicy="FILL_TO_CAPACITY">
-			<TableView bxml:id="medidasView" selectMode="MULTI">
+			<TableView bxml:id="medidasTable" selectMode="MULTI">
 				<columns>
 					<TableView.Column name="nombre" width="1*" headerData="Nombre"/>
 					<TableView.Column name="abreviatura" width="1*" headerData="Abreviatura"/>
@@ -43,7 +43,7 @@
 						</rowEditor>
 			</TableView>
 			<columnHeader>
-				<TableViewHeader tableView="$medidasView"/>
+				<TableViewHeader tableView="$medidasTable"/>
 			</columnHeader>
 		</ScrollPane>
 		</Border>
