@@ -16,6 +16,8 @@ import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TextInput;
 
+import dad.recetapp.services.ServiceException;
+import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.items.CategoriaItem;
 
 public class CategoriasPane extends TablePane implements Bindable {
@@ -30,6 +32,8 @@ public class CategoriasPane extends TablePane implements Bindable {
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		categorias = new ArrayList<CategoriaItem>();
 		categoriasTable.setTableData(categorias);
+		
+		initCategoriasTable();
 		
 		aniadirButton.getButtonPressListeners().add(new ButtonPressListener() {
 			@Override
@@ -46,17 +50,43 @@ public class CategoriasPane extends TablePane implements Bindable {
 		});
 	}
 
+	private void initCategoriasTable() {
+		try {
+			java.util.List<CategoriaItem> aux = ServiceLocator.getCategoriasService().listarCategorias();
+			for (CategoriaItem c : aux) {
+				categorias.add(c);
+			}
+		} catch (ServiceException e) {
+			
+		}
+	}
+
 	protected void onAniadirButtonPressed() {
 		CategoriaItem nueva = new CategoriaItem();
 		nueva.setDescripcion(descripcionText.getText());
+		try {
+			ServiceLocator.getCategoriasService().crearCategoria(nueva);
+		} catch (ServiceException e) {
+			
+		}
 		categorias.add(nueva);
 		descripcionText.setText("");
 	}
 
 	protected void onEliminarButtonPressed() {
+		java.util.List<CategoriaItem> eliminados = new java.util.ArrayList<CategoriaItem>();
 		Sequence<?> seleccionados = categoriasTable.getSelectedRows();
 		for (int i = 0; i < seleccionados.getLength(); i++) {
+			eliminados.add((CategoriaItem) seleccionados.get(i));
 			categorias.remove((CategoriaItem)seleccionados.get(i));
+		}
+		for (CategoriaItem e : eliminados) {
+			try {
+				CategoriaItem c = ServiceLocator.getCategoriasService().obtenerCategoria(e.getId());
+				ServiceLocator.getCategoriasService().eliminarCategoria(c.getId());
+			} catch (ServiceException e1) {
+				
+			}
 		}
 	}
 }
