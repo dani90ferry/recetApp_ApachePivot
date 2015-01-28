@@ -14,6 +14,7 @@ import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.TableView;
+import org.apache.pivot.wtk.TableViewRowListener;
 import org.apache.pivot.wtk.TextInput;
 
 import dad.recetapp.services.ServiceException;
@@ -33,6 +34,13 @@ public class MedidasPane extends TablePane implements Bindable {
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		medidas = new ArrayList<MedidaItem>();
 		medidasTable.setTableData(medidas);
+		medidasTable.getTableViewRowListeners().add(new TableViewRowListener.Adapter() {
+			@Override
+			public void rowUpdated(TableView tableView, int index) {
+				onMedidasTableRowUpdated(tableView, index);
+				super.rowUpdated(tableView, index);
+			}
+		});
 		
 		initMedidasTable();
 		
@@ -51,6 +59,15 @@ public class MedidasPane extends TablePane implements Bindable {
 		});
 	}
 	
+	protected void onMedidasTableRowUpdated(TableView tableView, int index) {
+		MedidaItem c = (MedidaItem)tableView.getSelectedRow();
+		try {
+			ServiceLocator.getMedidasService().modificarMedida(c);
+		} catch (ServiceException e) {
+			
+		}
+	}
+
 	private void initMedidasTable() {
 		try {
 			java.util.List<MedidaItem> aux = ServiceLocator.getMedidasService().listarMedidas();
@@ -72,6 +89,9 @@ public class MedidasPane extends TablePane implements Bindable {
 			
 		}
 		medidas.add(nueva);
+		//TODO IMPORTANTE
+		medidas.clear();
+		initMedidasTable();
 		nombreText.setText("");
 		abreviaturaText.setText("");
 	}

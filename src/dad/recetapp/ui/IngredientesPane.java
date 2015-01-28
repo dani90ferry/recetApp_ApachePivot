@@ -14,6 +14,7 @@ import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.TableView;
+import org.apache.pivot.wtk.TableViewRowListener;
 import org.apache.pivot.wtk.TextInput;
 
 import dad.recetapp.services.ServiceException;
@@ -33,8 +34,15 @@ public class IngredientesPane extends TablePane implements Bindable {
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		tipoIngredientes = new ArrayList<TipoIngredienteItem>();
 		ingredientesTable.setTableData(tipoIngredientes);
+		ingredientesTable.getTableViewRowListeners().add(new TableViewRowListener.Adapter() {
+			@Override
+			public void rowUpdated(TableView tableView, int index) {
+				onIngredientesTableRowUpdated(tableView, index);
+				super.rowUpdated(tableView, index);
+			}
+		});
 		
-		initMedidasTable();
+		initIngredientesTable();
 		
 		aniadirButton.getButtonPressListeners().add(new ButtonPressListener() {
 			@Override
@@ -48,11 +56,19 @@ public class IngredientesPane extends TablePane implements Bindable {
 			public void buttonPressed(Button button) {
 				onEliminarButtonPressed();
 			}
-		});
-		
+		});	
 	}
 	
-	private void initMedidasTable() {
+	protected void onIngredientesTableRowUpdated(TableView tableView, int index) {
+		TipoIngredienteItem c = (TipoIngredienteItem)tableView.getSelectedRow();
+		try {
+			ServiceLocator.getTiposIngredienteService().modificarTipoIngrediente(c);
+		} catch (ServiceException e) {
+			
+		}
+	}
+
+	private void initIngredientesTable() {
 		try {
 			java.util.List<TipoIngredienteItem> aux = ServiceLocator.getTiposIngredienteService().listarTiposIngredientes();
 			for (TipoIngredienteItem c : aux) {
@@ -72,6 +88,9 @@ public class IngredientesPane extends TablePane implements Bindable {
 			
 		}
 		tipoIngredientes.add(nueva);
+		//TODO IMPORTANTE
+		tipoIngredientes.clear();
+		initIngredientesTable();
 		nombreText.setText("");
 	}
 	

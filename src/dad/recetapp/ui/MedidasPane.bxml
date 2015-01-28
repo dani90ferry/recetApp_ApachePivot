@@ -32,9 +32,9 @@
 							<content:TableViewRowEditor
 								editEffect="VERTICAL_SLIDE">
 								<cellEditors>
-									<descripcion>
+									<nombre>
 										<TextInput textKey="nombre" /> 
-									</descripcion>
+									</nombre>
 									<abreviatura>
 										<TextInput textKey="abreviatura" /> 
 									</abreviatura>

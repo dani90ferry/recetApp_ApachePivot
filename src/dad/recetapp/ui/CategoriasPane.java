@@ -14,6 +14,7 @@ import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.TableView;
+import org.apache.pivot.wtk.TableViewRowListener;
 import org.apache.pivot.wtk.TextInput;
 
 import dad.recetapp.services.ServiceException;
@@ -32,6 +33,13 @@ public class CategoriasPane extends TablePane implements Bindable {
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		categorias = new ArrayList<CategoriaItem>();
 		categoriasTable.setTableData(categorias);
+		categoriasTable.getTableViewRowListeners().add(new TableViewRowListener.Adapter() {
+			@Override
+			public void rowUpdated(TableView tableView, int index) {
+				onCategoriasTableRowUpdated(tableView, index);
+				super.rowUpdated(tableView, index);
+			}
+		});
 		
 		initCategoriasTable();
 		
@@ -48,6 +56,15 @@ public class CategoriasPane extends TablePane implements Bindable {
 				onEliminarButtonPressed();
 			}
 		});
+	}
+
+	protected void onCategoriasTableRowUpdated(TableView tableView, int index) {
+		CategoriaItem c = (CategoriaItem)tableView.getSelectedRow();
+		try {
+			ServiceLocator.getCategoriasService().modificarCategoria(c);
+		} catch (ServiceException e) {
+			
+		}
 	}
 
 	private void initCategoriasTable() {
@@ -70,6 +87,9 @@ public class CategoriasPane extends TablePane implements Bindable {
 			
 		}
 		categorias.add(nueva);
+		//TODO IMPORTANTE
+		categorias.clear();
+		initCategoriasTable();
 		descripcionText.setText("");
 	}
 

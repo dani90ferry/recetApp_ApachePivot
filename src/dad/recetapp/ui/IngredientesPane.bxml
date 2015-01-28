@@ -28,9 +28,9 @@
 							<content:TableViewRowEditor
 								editEffect="VERTICAL_SLIDE">
 								<cellEditors>
-									<descripcion>
+									<nombre>
 										<TextInput textKey="nombre" /> 
-									</descripcion>
+									</nombre>
 								</cellEditors>
 							</content:TableViewRowEditor>
 						</rowEditor>

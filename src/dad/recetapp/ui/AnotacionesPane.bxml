@@ -12,16 +12,16 @@
 	<TablePane.Row height="-1">
 		<BoxPane styles="{horizontalAlignment:'center', verticalAlignment:'center', padding:5}">
 			<Label text="Descripción:" styles="{font:{bold:true}}"/>
-			<TextInput prompt="Descripción" textSize="15"/>
-			<PushButton buttonData="Añadir" />
-			<PushButton buttonData="Eliminar" />
+			<TextInput bxml:id="descripcionText" prompt="Descripción" textSize="15"/>
+			<PushButton bxml:id="aniadirButton" buttonData="Añadir" />
+			<PushButton bxml:id="eliminarButton" buttonData="Eliminar" />
 		</BoxPane>
 	</TablePane.Row>
 
 	<TablePane.Row height="1*">
 	<Border>
 		<ScrollPane horizontalScrollBarPolicy="FILL_TO_CAPACITY">
-			<TableView bxml:id="descripcionView" selectMode="MULTI">
+			<TableView bxml:id="anotacionesTable" selectMode="MULTI">
 				<columns>
 					<TableView.Column name="descripcion" width="1*" headerData="Descripción"/>
 				</columns>
@@ -37,7 +37,7 @@
 						</rowEditor>
 			</TableView>
 			<columnHeader>
-				<TableViewHeader tableView="$descripcionView"/>
+				<TableViewHeader tableView="$anotacionesTable"/>
 			</columnHeader>
 		</ScrollPane>
 		</Border>
