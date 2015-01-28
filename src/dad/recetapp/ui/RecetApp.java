@@ -101,9 +101,13 @@ public class RecetApp implements Application{
 	public boolean shutdown(boolean optional) throws Exception {
 		inicialWindow.close();
 		principalWindow.close();
+		if(nuevaRecetaWindow !=null)
 		nuevaRecetaWindow.close();
+		if(editarRecetaWindow !=null)
 		editarRecetaWindow.close();
+		if(nuevaInstruccionWindow !=null)
 		nuevaInstruccionWindow.close();
+		if(editarInstruccionWindow !=null)
 		editarInstruccionWindow.close();
 		return false;
 	}
