@@ -15,16 +15,16 @@
 		<Border title="Filtrar:" styles="{padding:5}">
 			<BoxPane styles="{horizontalAlignment:'center', verticalAlignment:'center'}">
 				<Label text="Nombre:" styles="{font:{bold:true}}" />
-				<TextInput prompt="Nombre" textSize="15"></TextInput>
+				<TextInput bxml:id="nombreText" prompt="Nombre" textSize="15"></TextInput>
 				<Label text="Hasta:" styles="{font:{bold:true}}" />
-				<Spinner preferredWidth="40" selectedIndex="0">
+				<Spinner bxml:id="minutosSpinner" preferredWidth="40" selectedIndex="0">
 					<spinnerData>
 						<content:NumericSpinnerData lowerBound="0"
 							upperBound="120" increment="1" />
 					</spinnerData>
 				</Spinner>
 				<Label text="M" styles="{font:{bold:true}}" />
-				<Spinner preferredWidth="40" selectedIndex="0">
+				<Spinner bxml:id="segundosSpinner" preferredWidth="40" selectedIndex="0">
 					<spinnerData>
 						<content:NumericSpinnerData lowerBound="0"
 							upperBound="59" increment="1" />
@@ -32,8 +32,7 @@
 				</Spinner>
 				<Label text="S" styles="{font:{bold:true}}" />
 				<Label text="Categoría:" styles="{font:{bold:true}}" />
-				<ListButton listData="['Falta']" selectedIndex="0"
-					preferredWidth="100" />
+				<ListButton bxml:id="categoriasListButton"/>
 			</BoxPane>
 		</Border>
 

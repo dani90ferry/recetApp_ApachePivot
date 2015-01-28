@@ -1,19 +1,22 @@
 package dad.recetapp.services.impl;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import dad.recetapp.db.DataBase;
 import dad.recetapp.services.IRecetasService;
 import dad.recetapp.services.ServiceException;
+import dad.recetapp.services.ServiceLocator;
+import dad.recetapp.services.items.MedidaItem;
 import dad.recetapp.services.items.RecetaItem;
 import dad.recetapp.services.items.RecetaListItem;
+import dad.recetapp.services.items.TipoAnotacionItem;
 
 public class RecetasService implements IRecetasService {
 
@@ -87,14 +90,57 @@ public class RecetasService implements IRecetasService {
 	@Override
 	public List<RecetaListItem> buscarRecetas(String nombre,
 			Integer tiempoTotal, Long idCategoria) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		List<RecetaListItem> aux = new ArrayList<RecetaListItem>();
+		try {
+			Connection conn = DataBase.getConnection();
+			PreparedStatement statement = conn.prepareStatement("select * from recetas where nombre = ?");
+			statement.setString(1, nombre);
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				RecetaListItem receta = new RecetaListItem();
+				receta.setId(rs.getLong("id"));
+				receta.setNombre(rs.getString("nombre"));
+				receta.setFechaCreacion(rs.getDate("fecha_creacion"));
+				receta.setCantidad(rs.getInt("cantidad"));
+				receta.setPara(rs.getString("para"));
+				receta.setTiempoTotal(rs.getInt("tiempo_total"));
+				receta.setTiempoTotal(rs.getInt("tiempo_total"));
+				receta.setTiempoThermomix(rs.getInt("tiempo_thermomix"));
+				receta.setCategoria((ServiceLocator.getCategoriasService().obtenerCategoria(rs.getLong("id_categoria")).getDescripcion()));
+				aux.add(receta);
+			}
+			statement.close();
+		} catch(SQLException e) {
+			throw new ServiceException("Error al listar las recetas", e);
+		}
+		return aux;
 	}
 
 	@Override
 	public List<RecetaListItem> listarRecetas() throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		List<RecetaListItem> aux = new ArrayList<RecetaListItem>();
+		try {
+			Connection conn = DataBase.getConnection();
+			PreparedStatement statement = conn.prepareStatement("select * from recetas");
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				RecetaListItem receta = new RecetaListItem();
+				receta.setId(rs.getLong("id"));
+				receta.setNombre(rs.getString("nombre"));
+				receta.setFechaCreacion(rs.getDate("fecha_creacion"));
+				receta.setCantidad(rs.getInt("cantidad"));
+				receta.setPara(rs.getString("para"));
+				receta.setTiempoTotal(rs.getInt("tiempo_total"));
+				receta.setTiempoTotal(rs.getInt("tiempo_total"));
+				receta.setTiempoThermomix(rs.getInt("tiempo_thermomix"));
+				receta.setCategoria((ServiceLocator.getCategoriasService().obtenerCategoria(rs.getLong("id_categoria")).getDescripcion()));
+				aux.add(receta);
+			}
+			statement.close();
+		} catch(SQLException e) {
+			throw new ServiceException("Error al listar las recetas", e);
+		}
+		return aux;
 	}
 
 	@Override

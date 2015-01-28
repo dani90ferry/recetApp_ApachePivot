@@ -49,6 +49,7 @@
 			<TablePane.Row height="-1">
 				<FlowPane styles="{padding:5}">
 					<Label text="Recetas:" styles="{font:{bold:true}}"></Label>
+					<Label bxml:id="numRecetas" text="" styles="{font:{bold:true}}"></Label>
 				</FlowPane>
 			</TablePane.Row>
 		</TablePane>
