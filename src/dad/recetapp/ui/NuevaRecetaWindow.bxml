@@ -26,8 +26,7 @@
 										<ListButton bxml:id="paraListButton" listData="['Personas']" selectedIndex="0" />
 									</BoxPane>
 									<BoxPane Form.label="Categoría">
-										<ListButton bxml:id="categoriaListButton" listData="['Seleccione una categoría']"
-											selectedIndex="0" />
+										<ListButton bxml:id="categoriaListButton"/>
 									</BoxPane>
 								</Form.Section>
 							</Form>

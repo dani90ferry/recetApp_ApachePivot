@@ -4,6 +4,7 @@ import java.net.URL;
 
 import org.apache.pivot.beans.BXML;
 import org.apache.pivot.beans.Bindable;
+import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
@@ -35,10 +36,13 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 	@BXML private Spinner tThermoSSpinner;
 	@BXML private PushButton cancelarButton;
 	@BXML private PushButton crearButton;
+	
 	@BXML private ComponenteReceta componenteReceta;
 
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
+		initCategoriaListButton();
+		
 		cancelarButton.getButtonPressListeners().add(new ButtonPressListener() {	
 			public void buttonPressed(Button button) {
 				 onCancelarButtonPressed();		
@@ -50,24 +54,64 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 				 onCrearButtonPressed();		
 			}
 		});
-
 	}
 
+	private void initCategoriaListButton() {
+		java.util.List<CategoriaItem> aux;
+		try {
+			aux = ServiceLocator.getCategoriasService().listarCategorias();
+			CategoriaItem categoria = new CategoriaItem();
+			categoria.setDescripcion("<Seleccione una categoría>");
+			aux.add(0, categoria);
+			categoriaListButton.setListData(convertirList(aux));
+			categoriaListButton.setSelectedIndex(0);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private List<CategoriaItem> convertirList(java.util.List<CategoriaItem> listUtil) {
+		List<CategoriaItem> aux = new ArrayList<CategoriaItem>();
+		for(CategoriaItem c : listUtil) {
+			aux.add(c);
+		}
+		return aux;
+	}
+
+//	protected void onCrearButtonPressed() {
+//		RecetaItem receta = new RecetaItem();
+//		CategoriaItem categoria = null;
+//		try {
+//			categoria = ServiceLocator.getCategoriasService().obtenerCategoria((long) 1);
+//		} catch (ServiceException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		receta.setNombre(nombreText.getText());
+//		receta.setCantidad(Integer.valueOf(cantidadText.getText()));
+//		receta.setPara("persona");
+//		receta.setTiempoTotal(tTotalMSpinner.getSelectedIndex()*60 + tTotalSSpinner.getSelectedIndex());
+//		receta.setTiempoThermomix(tThermoMSpinner.getSelectedIndex()*60 + tThermoSSpinner.getSelectedIndex());
+//		receta.setCategoria(categoria);
+//		
+//		try {
+//			ServiceLocator.getRecetasService().crearReceta(receta);
+//		} catch (ServiceException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+	
 	protected void onCrearButtonPressed() {
 		RecetaItem receta = new RecetaItem();
-		CategoriaItem categoria = null;
-		try {
-			categoria = ServiceLocator.getCategoriasService().obtenerCategoria((long) 1);
-		} catch (ServiceException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		receta.setNombre(nombreText.getText());
 		receta.setCantidad(Integer.valueOf(cantidadText.getText()));
+		//TODO Arreglar
 		receta.setPara("persona");
-		receta.setTiempoTotal(tTotalMSpinner.getSelectedIndex()*60 + tTotalSSpinner.getSelectedIndex());
-		receta.setTiempoThermomix(tThermoMSpinner.getSelectedIndex()*60 + tThermoSSpinner.getSelectedIndex());
-		receta.setCategoria(categoria);
+		receta.setTiempoTotal(tTotalMSpinner.getSelectedIndex() * 60 + tTotalSSpinner.getSelectedIndex());
+		receta.setTiempoThermomix(tThermoMSpinner.getSelectedIndex() * 60 + tThermoSSpinner.getSelectedIndex());
+		receta.setCategoria((CategoriaItem)categoriaListButton.getSelectedItem());
 		
 		try {
 			ServiceLocator.getRecetasService().crearReceta(receta);
@@ -75,11 +119,6 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
-	
-
-		
 	}
 
 	protected void onCancelarButtonPressed() {

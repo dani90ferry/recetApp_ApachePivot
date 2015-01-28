@@ -24,14 +24,10 @@ import dad.recetapp.services.items.TipoAnotacionItem;
 public class AnotacionesPane extends TablePane implements Bindable {
 	private List<TipoAnotacionItem> anotaciones;
 
-	@BXML
-	private TableView anotacionesTable;
-	@BXML
-	private TextInput descripcionText;
-	@BXML
-	private PushButton aniadirButton;
-	@BXML
-	private PushButton eliminarButton;
+	@BXML private TableView anotacionesTable;
+	@BXML private TextInput descripcionText;
+	@BXML private PushButton aniadirButton;
+	@BXML private PushButton eliminarButton;
 
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location,
