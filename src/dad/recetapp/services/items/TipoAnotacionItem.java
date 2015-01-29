@@ -19,5 +19,14 @@ public class TipoAnotacionItem {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof TipoAnotacionItem) {
+			TipoAnotacionItem tipo = (TipoAnotacionItem) obj;
+			return tipo.getId() == this.id;
+		}
+		return false;
+	}
 
 }

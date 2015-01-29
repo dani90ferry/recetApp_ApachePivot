@@ -2,6 +2,7 @@ package dad.recetapp.ui;
 
 import java.net.URL;
 
+
 import org.apache.pivot.beans.BXML;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.ArrayList;
@@ -18,9 +19,7 @@ import org.apache.pivot.wtk.Spinner;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TextInput;
-import org.apache.pivot.wtk.Keyboard.KeyLocation;
 
-import com.sun.corba.se.spi.orbutil.fsm.Input;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
@@ -68,7 +67,6 @@ public class RecetasPane extends TablePane implements Bindable {
 				onEditarButtonPressed();
 			}
 		});
-		
 	}
 	
 	protected void aplicarFiltro() {
@@ -125,8 +123,9 @@ public class RecetasPane extends TablePane implements Bindable {
 
 	protected void onEditarButtonPressed() {
 		recetApp.openEditarRecetaWindow();
+		
 	}
-
+	
 	protected void onAniadirButtonPressed() {
 		recetApp.openNuevaRecetaWindow();
 	}

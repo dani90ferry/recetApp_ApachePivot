@@ -32,5 +32,14 @@ public class SeccionItem {
 	public List<InstruccionItem> getInstrucciones() {
 		return instrucciones;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof SeccionItem) {
+			SeccionItem tipo = (SeccionItem) obj;
+			return tipo.getId() == this.id;
+		}
+		return false;
+	}
 
 }

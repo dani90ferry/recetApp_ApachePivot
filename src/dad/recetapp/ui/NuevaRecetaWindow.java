@@ -108,7 +108,7 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 		receta.setNombre(nombreText.getText());
 		receta.setCantidad(Integer.valueOf(cantidadText.getText()));
 		//TODO Arreglar
-		receta.setPara("persona");
+		receta.setPara((String) paraListButton.getSelectedItem());
 		receta.setTiempoTotal(tTotalMSpinner.getSelectedIndex() * 60 + tTotalSSpinner.getSelectedIndex());
 		receta.setTiempoThermomix(tThermoMSpinner.getSelectedIndex() * 60 + tThermoSSpinner.getSelectedIndex());
 		receta.setCategoria((CategoriaItem)categoriaListButton.getSelectedItem());
@@ -119,6 +119,9 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		close();
+		//TODO cuando añades una receta no se carga en la tabla recetas
 	}
 
 	protected void onCancelarButtonPressed() {

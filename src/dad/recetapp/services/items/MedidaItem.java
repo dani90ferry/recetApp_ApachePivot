@@ -28,5 +28,14 @@ public class MedidaItem {
 	public void setAbreviatura(String abreviatura) {
 		this.abreviatura = abreviatura;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof MedidaItem) {
+			MedidaItem tipo = (MedidaItem) obj;
+			return tipo.getId() == this.id;
+		}
+		return false;
+	}
 
 }

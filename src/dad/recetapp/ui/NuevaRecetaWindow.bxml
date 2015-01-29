@@ -23,7 +23,7 @@
 									</BoxPane>
 									<BoxPane Form.label="Para">
 										<TextInput bxml:id="cantidadText" prompt="Para" textSize="10"></TextInput>
-										<ListButton bxml:id="paraListButton" listData="['Personas']" selectedIndex="0" />
+										<ListButton bxml:id="paraListButton" listData="['Personas', 'Unidades']" selectedIndex="0" />
 									</BoxPane>
 									<BoxPane Form.label="Categoría">
 										<ListButton bxml:id="categoriaListButton"/>

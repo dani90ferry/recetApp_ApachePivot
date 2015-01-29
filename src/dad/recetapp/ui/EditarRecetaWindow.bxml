@@ -19,29 +19,28 @@
 							<Form>
 								<Form.Section>
 									<BoxPane Form.label="Nombre">
-										<TextInput prompt="Nombre"></TextInput>
+										<TextInput bxml:id="nombreText" prompt="Nombre"></TextInput>
 									</BoxPane>
 									<BoxPane Form.label="Para">
-										<TextInput prompt="Para" textSize="10"></TextInput>
-										<ListButton listData="['Personas']" selectedIndex="0" />
+										<TextInput bxml:id="cantidadText" prompt="Para" textSize="10"></TextInput>
+										<ListButton bxml:id="paraListButton" listData="['Personas', 'Unidades']" selectedIndex="0" />
 									</BoxPane>
 									<BoxPane Form.label="Categoría">
-										<ListButton listData="['Seleccione una categoría']"
-											selectedIndex="0" />
+										<ListButton bxml:id="categoriaListButton" />
 									</BoxPane>
 								</Form.Section>
 							</Form>
 							<Form>
 								<Form.Section>
 									<BoxPane Form.label="Tiempo total">
-										<Spinner preferredWidth="40" selectedIndex="0">
+										<Spinner bxml:id="tTotalMSpinner" preferredWidth="40" selectedIndex="0">
 											<spinnerData>
 												<content:NumericSpinnerData
 													lowerBound="0" upperBound="120" increment="1" />
 											</spinnerData>
 										</Spinner>
 										<Label text="M" styles="{font:{bold:true}}" />
-										<Spinner preferredWidth="40" selectedIndex="0">
+										<Spinner bxml:id="tTotalSSpinner" preferredWidth="40" selectedIndex="0">
 											<spinnerData>
 												<content:NumericSpinnerData
 													lowerBound="0" upperBound="59" increment="1" />
@@ -50,14 +49,14 @@
 										<Label text="S" styles="{font:{bold:true}}" />
 									</BoxPane>
 									<BoxPane Form.label="Tiempo con Thermomix">
-										<Spinner preferredWidth="40" selectedIndex="0">
+										<Spinner bxml:id="tThermoMSpinner" preferredWidth="40" selectedIndex="0">
 											<spinnerData>
 												<content:NumericSpinnerData
 													lowerBound="0" upperBound="120" increment="1" />
 											</spinnerData>
 										</Spinner>
 										<Label text="M" styles="{font:{bold:true}}" />
-										<Spinner preferredWidth="40" selectedIndex="0">
+										<Spinner bxml:id="tThermoSSpinner" preferredWidth="40" selectedIndex="0">
 											<spinnerData>
 												<content:NumericSpinnerData
 													lowerBound="0" upperBound="59" increment="1" />
@@ -76,7 +75,7 @@
 							<TabPane.tabData>
 								<content:ButtonData text="" />
 							</TabPane.tabData>
-							<bxml:include src="ComponenteReceta.bxml" />
+							<bxml:include bxml:id="componenteReceta" src="ComponenteReceta.bxml" />
 						</FillPane>
 						<FillPane>
 							<TabPane.tabData>
@@ -88,7 +87,7 @@
 				<TablePane.Row height="-1">
 					<Border styles="{padding:{top:5}, thickness:0}">
 					<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'center'}">
-						<PushButton buttonData="Guardar cambios" />
+						<PushButton bxml:id="guardarButton" buttonData="Guardar cambios" />
 						<PushButton bxml:id="cancelarButton" buttonData="Cancelar" />
 					</BoxPane>
 					</Border>

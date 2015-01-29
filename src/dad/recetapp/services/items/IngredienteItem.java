@@ -38,4 +38,13 @@ public class IngredienteItem {
 		this.tipo = tipo;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof IngredienteItem) {
+			IngredienteItem tipo = (IngredienteItem) obj;
+			return tipo.getId() == this.id;
+		}
+		return false;
+	}
+	
 }

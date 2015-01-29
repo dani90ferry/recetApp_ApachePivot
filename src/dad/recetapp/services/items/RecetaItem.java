@@ -13,8 +13,8 @@ public class RecetaItem {
 	private Integer tiempoTotal;
 	private Integer tiempoThermomix;
 	private CategoriaItem categoria;
-	private List<AnotacionItem> anotaciones = new ArrayList<AnotacionItem>();
-	private List<SeccionItem> secciones = new ArrayList<SeccionItem>();
+	private List<AnotacionItem> anotaciones;
+	private List<SeccionItem> secciones;
 
 	public Long getId() {
 		return id;
@@ -81,11 +81,31 @@ public class RecetaItem {
 	}
 
 	public List<AnotacionItem> getAnotaciones() {
+		if (anotaciones == null) { 
+			anotaciones = new ArrayList<AnotacionItem>();
+		}
 		return anotaciones;
 	}
 
 	public List<SeccionItem> getSecciones() {
+		if (secciones == null) {
+			secciones = new ArrayList<SeccionItem>();
+		}
 		return secciones;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof RecetaItem) {
+			RecetaItem tipo = (RecetaItem) obj;
+			return tipo.getId() == this.id;
+		}
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return nombre;
 	}
 
 }
