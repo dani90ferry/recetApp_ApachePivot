@@ -1,7 +1,6 @@
 package dad.recetapp.services.impl;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +12,7 @@ import java.util.List;
 import dad.recetapp.db.DataBase;
 import dad.recetapp.services.IRecetasService;
 import dad.recetapp.services.ServiceException;
+import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.items.AnotacionItem;
 import dad.recetapp.services.items.CategoriaItem;
 import dad.recetapp.services.items.IngredienteItem;
@@ -63,6 +63,9 @@ public class RecetasService implements IRecetasService {
 			
 			conn.commit();
 			conn.setAutoCommit(true);
+			
+			receta.setId(id);
+			
 		} catch (SQLException e) {
 			try {
 				conn.rollback();
@@ -489,6 +492,7 @@ public class RecetasService implements IRecetasService {
 		SeccionItem seccion = null;
 		try {
 			Connection conn = DataBase.getConnection();
+			
 			PreparedStatement sentencia = conn.prepareStatement("select * from partes where id=?");
 			sentencia.setLong(1, id);
 			ResultSet rs = sentencia.executeQuery();
@@ -499,6 +503,34 @@ public class RecetasService implements IRecetasService {
 			}
 			rs.close();
 			sentencia.close();
+
+			PreparedStatement sentenciaIng = conn.prepareStatement("select * from ingredientes where id_parte=?");
+			sentenciaIng.setLong(1, id);
+			ResultSet rsIng = sentenciaIng.executeQuery();
+			while (rsIng.next()) {
+				IngredienteItem ingrediente = new IngredienteItem();
+				ingrediente.setId(rsIng.getLong("id"));
+				ingrediente.setCantidad(rsIng.getInt("cantidad"));
+				ingrediente.setMedida(ServiceLocator.getMedidasService().obtenerMedida(rsIng.getLong("id_medida")));
+				ingrediente.setTipo(ServiceLocator.getTiposIngredienteService().obtenerTipoIngrediente(rsIng.getLong("id_tipo")));
+				seccion.getIngredientes().add(ingrediente);
+			}
+			rsIng.close();
+			sentenciaIng.close();
+			
+			PreparedStatement sentenciaIns = conn.prepareStatement("select * from instrucciones where id_parte=?");
+			sentenciaIns.setLong(1, id);
+			ResultSet rsIns = sentenciaIns.executeQuery();
+			while (rsIns.next()) {
+				InstruccionItem instruccion = new InstruccionItem();
+				instruccion.setId(rsIns.getLong("id"));
+				instruccion.setDescripcion(rsIns.getString("descripcion"));
+				instruccion.setOrden(rsIns.getInt("orden"));
+				seccion.getInstrucciones().add(instruccion);
+			}
+			rsIns.close();
+			sentenciaIns.close();
+			
 		} catch (SQLException e) {
 			throw new ServiceException("Error al obtener la sección con ID '" + id + "': " + e.getMessage());
 		}			

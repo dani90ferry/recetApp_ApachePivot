@@ -11,7 +11,11 @@ import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
+import org.apache.pivot.wtk.MessageType;
+import org.apache.pivot.wtk.Prompt;
 import org.apache.pivot.wtk.PushButton;
+import org.apache.pivot.wtk.Sheet;
+import org.apache.pivot.wtk.SheetCloseListener;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TableViewRowListener;
@@ -80,35 +84,56 @@ public class IngredientesPane extends TablePane implements Bindable {
 	}
 	
 	protected void onAniadirButtonPressed() {
-		TipoIngredienteItem nueva = new TipoIngredienteItem();
-		nueva.setNombre(nombreText.getText());
-		try {
-			ServiceLocator.getTiposIngredienteService().crearTipoIngrediente(nueva);
-		} catch (ServiceException e) {
+		if(!nombreText.getText().equals("")) {
+			TipoIngredienteItem nueva = new TipoIngredienteItem();
+			nueva.setNombre(nombreText.getText());
+			try {
+				ServiceLocator.getTiposIngredienteService().crearTipoIngrediente(nueva);
+			} catch (ServiceException e) {
 			
+			}
+				tipoIngredientes.add(nueva);
+			//TODO IMPORTANTE
+				tipoIngredientes.clear();
+				initIngredientesTable();
+				nombreText.setText("");
 		}
-		tipoIngredientes.add(nueva);
-		//TODO IMPORTANTE
-		tipoIngredientes.clear();
-		initIngredientesTable();
-		nombreText.setText("");
+		else {
+			Prompt mensaje = new Prompt("Nombre no puede ser vací");
+			mensaje.open(this.getWindow());
+		}
 	}
 	
 	protected void onEliminarButtonPressed() {
+		StringBuffer mensaje = new StringBuffer();
+		mensaje.append("¿Desea eliminar los siguientes ingredientes?\n\n");
+		
 		java.util.List<TipoIngredienteItem> eliminados = new java.util.ArrayList<TipoIngredienteItem>();
 		Sequence<?> seleccionados = ingredientesTable.getSelectedRows();
-		for (int i = 0; i < seleccionados.getLength(); i++) {
-			eliminados.add((TipoIngredienteItem) seleccionados.get(i));
-			tipoIngredientes.remove((TipoIngredienteItem)seleccionados.get(i));
-		}
-		for (TipoIngredienteItem e : eliminados) {
-			try {
-				TipoIngredienteItem c = ServiceLocator.getTiposIngredienteService().obtenerTipoIngrediente(e.getId());
-				ServiceLocator.getTiposIngredienteService().eliminarTipoIngrediente(c.getId());
-			} catch (ServiceException e1) {
-				
+		
+		if(seleccionados.getLength() != 0) {
+			for (int i = 0; i < seleccionados.getLength(); i++) {
+				mensaje.append("- " + ((TipoIngredienteItem)seleccionados.get(i)).getNombre() + "\n");
 			}
+			Prompt confirmar = new Prompt(MessageType.WARNING, mensaje.toString(), new ArrayList<String>("Sí", "No"));
+			confirmar.open(this.getWindow(), new SheetCloseListener() {
+				public void sheetClosed(Sheet sheet) {
+					if (confirmar.getResult() && confirmar.getSelectedOption().equals("Sí")) {
+						for (int i = 0; i < seleccionados.getLength(); i++) {
+							eliminados.add((TipoIngredienteItem) seleccionados.get(i));
+							tipoIngredientes.remove((TipoIngredienteItem)seleccionados.get(i));
+						}
+						for (TipoIngredienteItem e : eliminados) {
+							try {
+								TipoIngredienteItem c = ServiceLocator.getTiposIngredienteService().obtenerTipoIngrediente(e.getId());
+								ServiceLocator.getTiposIngredienteService().eliminarTipoIngrediente(c.getId());
+							} catch (ServiceException e1) {
+							
+							}
+						}
+					}
+				}
+			});
 		}
 	}
-	
 }

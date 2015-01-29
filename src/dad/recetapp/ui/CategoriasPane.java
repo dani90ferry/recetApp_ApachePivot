@@ -11,7 +11,11 @@ import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
+import org.apache.pivot.wtk.MessageType;
+import org.apache.pivot.wtk.Prompt;
 import org.apache.pivot.wtk.PushButton;
+import org.apache.pivot.wtk.Sheet;
+import org.apache.pivot.wtk.SheetCloseListener;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TableViewRowListener;
@@ -79,34 +83,56 @@ public class CategoriasPane extends TablePane implements Bindable {
 	}
 
 	protected void onAniadirButtonPressed() {
-		CategoriaItem nueva = new CategoriaItem();
-		nueva.setDescripcion(descripcionText.getText());
-		try {
-			ServiceLocator.getCategoriasService().crearCategoria(nueva);
-		} catch (ServiceException e) {
+		if(!descripcionText.getText().equals("")) {
+			CategoriaItem nueva = new CategoriaItem();
+			nueva.setDescripcion(descripcionText.getText());
+			try {
+				ServiceLocator.getCategoriasService().crearCategoria(nueva);
+			} catch (ServiceException e) {
 			
+			}
+			categorias.add(nueva);
+			//TODO IMPORTANTE
+			categorias.clear();
+			initCategoriasTable();
+			descripcionText.setText("");
 		}
-		categorias.add(nueva);
-		//TODO IMPORTANTE
-		categorias.clear();
-		initCategoriasTable();
-		descripcionText.setText("");
+		else {
+			Prompt mensaje = new Prompt("Descripción no puede ser vacía");
+			mensaje.open(this.getWindow());
+		}
 	}
 
 	protected void onEliminarButtonPressed() {
+		StringBuffer mensaje = new StringBuffer();
+		mensaje.append("¿Desea eliminar las siguientes categorías?\n\n");
+		
 		java.util.List<CategoriaItem> eliminados = new java.util.ArrayList<CategoriaItem>();
 		Sequence<?> seleccionados = categoriasTable.getSelectedRows();
-		for (int i = 0; i < seleccionados.getLength(); i++) {
-			eliminados.add((CategoriaItem) seleccionados.get(i));
-			categorias.remove((CategoriaItem)seleccionados.get(i));
-		}
-		for (CategoriaItem e : eliminados) {
-			try {
-				CategoriaItem c = ServiceLocator.getCategoriasService().obtenerCategoria(e.getId());
-				ServiceLocator.getCategoriasService().eliminarCategoria(c.getId());
-			} catch (ServiceException e1) {
-				
+		
+		if(seleccionados.getLength() != 0) {
+			for (int i = 0; i < seleccionados.getLength(); i++) {
+				mensaje.append("- " + ((CategoriaItem)seleccionados.get(i)).getDescripcion() + "\n");
 			}
+			Prompt confirmar = new Prompt(MessageType.WARNING, mensaje.toString(), new ArrayList<String>("Sí", "No"));
+			confirmar.open(this.getWindow(), new SheetCloseListener() {
+				public void sheetClosed(Sheet sheet) {
+					if (confirmar.getResult() && confirmar.getSelectedOption().equals("Sí")) {
+						for (int i = 0; i < seleccionados.getLength(); i++) {
+							eliminados.add((CategoriaItem) seleccionados.get(i));
+							categorias.remove((CategoriaItem)seleccionados.get(i));
+						}
+						for (CategoriaItem e : eliminados) {
+							try {
+								CategoriaItem c = ServiceLocator.getCategoriasService().obtenerCategoria(e.getId());
+								ServiceLocator.getCategoriasService().eliminarCategoria(c.getId());
+							} catch (ServiceException e1) {
+							
+							}
+						}
+					}
+				}
+			});
 		}
 	}
 }

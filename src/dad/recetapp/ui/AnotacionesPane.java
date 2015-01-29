@@ -11,7 +11,11 @@ import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
+import org.apache.pivot.wtk.MessageType;
+import org.apache.pivot.wtk.Prompt;
 import org.apache.pivot.wtk.PushButton;
+import org.apache.pivot.wtk.Sheet;
+import org.apache.pivot.wtk.SheetCloseListener;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TableViewRowListener;
@@ -83,41 +87,56 @@ public class AnotacionesPane extends TablePane implements Bindable {
 	}
 
 	protected void onEliminarButtonPressed() {
+		StringBuffer mensaje = new StringBuffer();
+		mensaje.append("¿Desea eliminar las siguientes anotaciones?\n\n");
+		
 		java.util.List<TipoAnotacionItem> eliminados = new java.util.ArrayList<TipoAnotacionItem>();
 		Sequence<?> seleccionados = anotacionesTable.getSelectedRows();
-		System.out.println(eliminados.size());
-		for (int i = 0; i < seleccionados.getLength(); i++) {
-			eliminados.add((TipoAnotacionItem) seleccionados.get(i));
-			anotaciones.remove((TipoAnotacionItem) seleccionados.get(i));
-		}
-		System.out.println(eliminados.size());
-		for (TipoAnotacionItem e : eliminados) {
-			try {
-				TipoAnotacionItem c = ServiceLocator.getTiposAnotacionesService()
-						.obtenerTipoAnotacion(e.getId());
-				ServiceLocator.getTiposAnotacionesService().eliminarTipoAnotacion(
-						c.getId());
-			} catch (ServiceException e1) {
-
+		
+		if(seleccionados.getLength() != 0) {
+			for (int i = 0; i < seleccionados.getLength(); i++) {
+				mensaje.append("- " + ((TipoAnotacionItem)seleccionados.get(i)).getDescripcion() + "\n");
 			}
-
+			Prompt confirmar = new Prompt(MessageType.WARNING, mensaje.toString(), new ArrayList<String>("Sí", "No"));
+			confirmar.open(this.getWindow(), new SheetCloseListener() {
+				public void sheetClosed(Sheet sheet) {
+					if (confirmar.getResult() && confirmar.getSelectedOption().equals("Sí")) {
+						for (int i = 0; i < seleccionados.getLength(); i++) {
+							eliminados.add((TipoAnotacionItem) seleccionados.get(i));
+							anotaciones.remove((TipoAnotacionItem)seleccionados.get(i));
+						}
+						for (TipoAnotacionItem e : eliminados) {
+							try {
+								TipoAnotacionItem c = ServiceLocator.getTiposAnotacionesService().obtenerTipoAnotacion(e.getId());
+								ServiceLocator.getTiposAnotacionesService().eliminarTipoAnotacion(c.getId());
+							} catch (ServiceException e1) {
+							
+							}
+						}
+					}
+				}
+			});
 		}
-		System.out.println(eliminados.size());
-
 	}
 
 	protected void onAnadirButtonPressed() throws ServiceException {
-		TipoAnotacionItem nueva = new TipoAnotacionItem();
-		nueva.setDescripcion(descripcionText.getText());
-		try {
-			ServiceLocator.getTiposAnotacionesService().crearTipoAnotacion(nueva);
-		} catch (ServiceException e) {
+		if(!descripcionText.getText().equals("")) {
+			TipoAnotacionItem nueva = new TipoAnotacionItem();
+			nueva.setDescripcion(descripcionText.getText());
+			try {
+				ServiceLocator.getTiposAnotacionesService().crearTipoAnotacion(nueva);
+			} catch (ServiceException e) {
 			
+			}
+			anotaciones.add(nueva);
+			//TODO IMPORTANTE
+			anotaciones.clear();
+			initAnotacionesTable();
+			descripcionText.setText("");
 		}
-		anotaciones.add(nueva);
-		//TODO IMPORTANTE
-		anotaciones.clear();
-		initAnotacionesTable();
-		descripcionText.setText("");
+		else {
+			Prompt mensaje = new Prompt("Descripción no puede ser vacía");
+			mensaje.open(this.getWindow());
+		}
 	}
 }

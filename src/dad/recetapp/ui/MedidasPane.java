@@ -11,7 +11,11 @@ import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
+import org.apache.pivot.wtk.MessageType;
+import org.apache.pivot.wtk.Prompt;
 import org.apache.pivot.wtk.PushButton;
+import org.apache.pivot.wtk.Sheet;
+import org.apache.pivot.wtk.SheetCloseListener;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TableViewRowListener;
@@ -80,36 +84,57 @@ public class MedidasPane extends TablePane implements Bindable {
 	}
 	
 	protected void onAniadirButtonPressed() {
-		MedidaItem nueva = new MedidaItem();
-		nueva.setNombre(nombreText.getText());
-		nueva.setAbreviatura(abreviaturaText.getText());
-		try {
-			ServiceLocator.getMedidasService().crearMedida(nueva);
-		} catch (ServiceException e) {
+		if(!nombreText.getText().equals("") && !abreviaturaText.getText().equals("")) {
+			MedidaItem nueva = new MedidaItem();
+			nueva.setNombre(nombreText.getText());
+			nueva.setAbreviatura(abreviaturaText.getText());
+			try {
+				ServiceLocator.getMedidasService().crearMedida(nueva);
+			} catch (ServiceException e) {
 			
+			}
+			medidas.add(nueva);
+			//TODO IMPORTANTE
+			medidas.clear();
+			initMedidasTable();
+			nombreText.setText("");
+			abreviaturaText.setText("");
+		} else {
+			Prompt mensaje = new Prompt("Quedan campos vacíos");
+			mensaje.open(this.getWindow());
 		}
-		medidas.add(nueva);
-		//TODO IMPORTANTE
-		medidas.clear();
-		initMedidasTable();
-		nombreText.setText("");
-		abreviaturaText.setText("");
 	}
 	
 	protected void onEliminarButtonPressed() {
+		StringBuffer mensaje = new StringBuffer();
+		mensaje.append("¿Desea eliminar las siguientes medidas?\n\n");
+		
 		java.util.List<MedidaItem> eliminados = new java.util.ArrayList<MedidaItem>();
 		Sequence<?> seleccionados = medidasTable.getSelectedRows();
-		for (int i = 0; i < seleccionados.getLength(); i++) {
-			eliminados.add((MedidaItem) seleccionados.get(i));
-			medidas.remove((MedidaItem)seleccionados.get(i));
-		}
-		for (MedidaItem e : eliminados) {
-			try {
-				MedidaItem c = ServiceLocator.getMedidasService().obtenerMedida(e.getId());
-				ServiceLocator.getMedidasService().eliminarMedida(c.getId());
-			} catch (ServiceException e1) {
-				
+		
+		if(seleccionados.getLength() != 0) {
+			for (int i = 0; i < seleccionados.getLength(); i++) {
+				mensaje.append("- " + ((MedidaItem)seleccionados.get(i)).getNombre() + "\n");
 			}
+			Prompt confirmar = new Prompt(MessageType.WARNING, mensaje.toString(), new ArrayList<String>("Sí", "No"));
+			confirmar.open(this.getWindow(), new SheetCloseListener() {
+				public void sheetClosed(Sheet sheet) {
+					if (confirmar.getResult() && confirmar.getSelectedOption().equals("Sí")) {
+						for (int i = 0; i < seleccionados.getLength(); i++) {
+							eliminados.add((MedidaItem) seleccionados.get(i));
+							medidas.remove((MedidaItem)seleccionados.get(i));
+						}
+						for (MedidaItem e : eliminados) {
+							try {
+								MedidaItem c = ServiceLocator.getMedidasService().obtenerMedida(e.getId());
+								ServiceLocator.getMedidasService().eliminarMedida(c.getId());
+							} catch (ServiceException e1) {
+							
+							}
+						}
+					}
+				}
+			});
 		}
 	}
 }
