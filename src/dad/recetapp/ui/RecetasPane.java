@@ -210,16 +210,19 @@ public class RecetasPane extends TablePane implements Bindable {
 							
 							}
 						}
+						//Actualizar el número de recetas
+						recetApp.getPrincipalWindow().setNumRecetasText("" + recetas.getLength());
 					}
 				}
 			});
+			
 		}
 		//Recargar la tabla
 //		No sirve
 //		recetas.clear();
 //		initRecetasTable();
-		//Actualizar el número de recetas
-		recetApp.getPrincipalWindow().setNumRecetasText("" + recetas.getLength());
+		
+		
 	}
 	
 	protected void onAniadirButtonPressed() {
