@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:NuevaInstruccionWindow title="Nueva Intrucción para ''"
-	maximized="true" xmlns:bxml="http://pivot.apache.org/bxml"
+	modal="true" xmlns:bxml="http://pivot.apache.org/bxml"
 	xmlns:content="org.apache.pivot.wtk.content" xmlns:ui="dad.recetapp.ui"
 	xmlns="org.apache.pivot.wtk">
 
@@ -34,12 +34,12 @@
 						</columns>
 						<TablePane.Row height="-1">
 							<Label text="Orden:" styles="{font:{bold:true}}" />
-							<TextInput></TextInput>
+							<TextInput bxml:id="ordenText"></TextInput>
 						</TablePane.Row>
 						<TablePane.Row height="-1">
 							<Label text="Descripción:" styles="{font:{bold:true}}" />
 							<Border>
-							<TextArea minimumHeight="80"></TextArea>
+							<TextArea bxml:id="descripcionText" minimumHeight="80"></TextArea>
 							</Border>
 						</TablePane.Row>
 					</TablePane>
@@ -47,8 +47,8 @@
 
 				<TablePane.Row height="1*">
 					<BoxPane styles="{horizontalAlignment:'right', verticalAlignment:'bottom'}">
-						<PushButton buttonData="Añadir" />
-						<PushButton buttonData="Cancelar" />
+						<PushButton bxml:id="anadirButton" buttonData="Añadir" />
+						<PushButton bxml:id="cancelarButton" buttonData="Cancelar" />
 					</BoxPane>
 				</TablePane.Row>
 			</TablePane>

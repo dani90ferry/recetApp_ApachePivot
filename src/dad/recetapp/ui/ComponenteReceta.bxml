@@ -71,7 +71,7 @@
 							<TablePane.Row>
 							<Border styles="{padding:{top:5}, thickness:0}">
 								<BoxPane styles="{horizontalAlignment:'right'}">
-									<PushButton>
+									<PushButton bxml:id="aniadirIngrediente">
 										<content:ButtonData
 											icon="/dad/recetapp/ui/images/add-icon-20x20.png" />
 									</PushButton>
@@ -98,7 +98,7 @@
 							<TablePane.Row height="1*">
 								<Border>
 									<ScrollPane horizontalScrollBarPolicy="FILL_TO_CAPACITY">
-										<TableView bxml:id="instruccionesView" selectMode="MULTI">
+										<TableView bxml:id="instruccionesTable" selectMode="MULTI">
 											<columns>
 												<TableView.Column name="orden" width="1*"
 													headerData="Orden" />
@@ -120,7 +120,7 @@
 											</rowEditor>
 										</TableView>
 										<columnHeader>
-											<TableViewHeader tableView="$instruccionesView" />
+											<TableViewHeader tableView="$instruccionesTable" />
 										</columnHeader>
 									</ScrollPane>
 								</Border>

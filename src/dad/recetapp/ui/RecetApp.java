@@ -78,7 +78,7 @@ public class RecetApp implements Application{
 			e.printStackTrace();
 		}
 	}
-	
+	/*
 	public void openNuevaIntruccionWindow() {
 		try {
 			nuevaInstruccionWindow = (NuevaInstruccionWindow) loadWindow("/dad/recetapp/ui/NuevaInstruccionWindow.bxml");
@@ -87,7 +87,7 @@ public class RecetApp implements Application{
 			e.printStackTrace();
 		}
 	}
-	
+	*/
 	public void openEditarIntruccionWindow() {
 		try {
 			editarInstruccionWindow = (EditarInstruccionWindow) loadWindow("/dad/recetapp/ui/EditarInstruccionWindow.bxml");
