@@ -22,9 +22,7 @@ public class RecetApp implements Application{
 	private NuevaRecetaWindow nuevaRecetaWindow = null;
 	private EditarRecetaWindow editarRecetaWindow = null;
 	private NuevaInstruccionWindow nuevaInstruccionWindow = null;
-	private EditarInstruccionWindow editarInstruccionWindow = null;
-
-	
+	private EditarInstruccionWindow editarInstruccionWindow = null;	
 	
 	public static Window loadWindow(String bxmlFile) throws IOException, SerializationException {
 		URL bxmlUrl = RecetApp.class.getResource(bxmlFile);

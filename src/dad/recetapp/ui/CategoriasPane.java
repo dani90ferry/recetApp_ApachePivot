@@ -102,6 +102,8 @@ public class CategoriasPane extends TablePane implements Bindable {
 			mensaje.open(this.getWindow());
 		}
 	}
+	
+	//TODO Comprobar si se puede simplificar la eliminación (último bucle for) Fijarse en el eliminar de recetasPane
 
 	protected void onEliminarButtonPressed() {
 		StringBuffer mensaje = new StringBuffer();
