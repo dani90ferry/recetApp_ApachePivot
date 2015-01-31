@@ -22,12 +22,13 @@ import dad.recetapp.services.items.InstruccionItem;
 
 public class ComponenteReceta extends TablePane implements Bindable {
 	private RecetApp recetApp;
-	private List<InstruccionItem> instrucciones;
-	@BXML private PushButton aniadirInstruccion;
-	@BXML private PushButton aniadirIngrediente;
-	@BXML private TableView instruccionesTable;
 	private NuevaInstruccionWindow nuevaInstruccionWindow;
 	private NuevoIngredienteWindow nuevoIngedienteWindow;
+	private List<InstruccionItem> instrucciones;
+	
+	@BXML private TableView instruccionesTable;
+	@BXML private PushButton aniadirInstruccion;
+	@BXML private PushButton aniadirIngrediente;
 	
 	
 	@Override

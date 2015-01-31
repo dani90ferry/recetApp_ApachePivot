@@ -70,7 +70,7 @@
 					</TablePane>
 				</TablePane.Row>
 				<TablePane.Row height="1*">
-					<TabPane>
+					<TabPane bxml:id="recetasTab">
 						<FillPane>
 							<TabPane.tabData>
 								<content:ButtonData text="" />
