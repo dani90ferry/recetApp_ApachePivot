@@ -15,6 +15,7 @@ import java.net.URL;
 
 
 
+
 import org.apache.pivot.beans.BXML;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.ArrayList;
@@ -52,11 +53,12 @@ import org.apache.pivot.wtk.Button.State;
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.items.CategoriaItem;
+import dad.recetapp.services.items.RecetaListFormatItem;
 import dad.recetapp.services.items.RecetaListItem;
 
 public class RecetasPane extends TablePane implements Bindable {
 	private RecetApp recetApp;
-	private List<RecetaListItem> recetas;
+	private List<RecetaListFormatItem> recetas;
 	
 	@BXML private TableView recetasTable;
 	@BXML private TextInput nombreText;
@@ -69,7 +71,7 @@ public class RecetasPane extends TablePane implements Bindable {
 	
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
-		recetas = new ArrayList<RecetaListItem>();
+		recetas = new ArrayList<RecetaListFormatItem>();
 		recetasTable.setTableData(recetas);
 		
 		initRecetasTable();
@@ -137,7 +139,7 @@ public class RecetasPane extends TablePane implements Bindable {
 				Long idCategoria = ((CategoriaItem)categoriasListButton.getSelectedItem()).getId();
 				aux = ServiceLocator.getRecetasService().buscarRecetas(nombreText.getText(), tiempoTotal, idCategoria);
 			for (RecetaListItem c : aux) {
-				recetas.add(c);
+				recetas.add(convert(c));
 			}
 		} catch (ServiceException e) {
 			
@@ -145,12 +147,23 @@ public class RecetasPane extends TablePane implements Bindable {
 		//Actualizar el número de recetas
 		recetApp.getPrincipalWindow().setNumRecetasText("" + recetas.getLength());
 	}
+	
+	private RecetaListFormatItem convert(RecetaListItem rci) {
+		RecetaListFormatItem rlfi = new RecetaListFormatItem();
+		rlfi.setId(rci.getId());
+		rlfi.setNombre(rci.getNombre());
+		rlfi.setFechaCreacion(rci.getFechaCreacion());
+		rlfi.setPara(rci.getCantidad(), rci.getPara());
+		rlfi.setTiempoTotal(rci.getTiempoTotal());
+		rlfi.setCategoria(rci.getCategoria());
+		return rlfi;
+	}
 
 	private void initRecetasTable() {
 		try {
 			java.util.List<RecetaListItem> aux = ServiceLocator.getRecetasService().listarRecetas();
 			for (RecetaListItem c : aux) {
-				recetas.add(c);
+				recetas.add(convert(c));
 			}
 		} catch (ServiceException e) {
 			
@@ -201,7 +214,7 @@ public class RecetasPane extends TablePane implements Bindable {
 					if (confirmar.getResult() && confirmar.getSelectedOption().equals("Sí")) {
 						for (int i = 0; i < seleccionados.getLength(); i++) {
 							eliminados.add((RecetaListItem) seleccionados.get(i));
-							recetas.remove((RecetaListItem)seleccionados.get(i));
+							recetas.remove(convert((RecetaListItem)seleccionados.get(i)));
 						}
 						for (RecetaListItem e : eliminados) {
 							try {
@@ -210,19 +223,16 @@ public class RecetasPane extends TablePane implements Bindable {
 							
 							}
 						}
-						//Actualizar el número de recetas
-						recetApp.getPrincipalWindow().setNumRecetasText("" + recetas.getLength());
 					}
 				}
 			});
-			
 		}
 		//Recargar la tabla
 //		No sirve
 //		recetas.clear();
 //		initRecetasTable();
-		
-		
+		//Actualizar el número de recetas
+		recetApp.getPrincipalWindow().setNumRecetasText("" + recetas.getLength());
 	}
 	
 	protected void onAniadirButtonPressed() {
