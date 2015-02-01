@@ -1,13 +1,13 @@
 package dad.recetapp.ui;
 
 import java.io.IOException;
-
 import java.net.URL;
 
 import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.wtk.Application;
+import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.Window;
 
@@ -22,12 +22,18 @@ public class RecetApp implements Application{
 	private NuevaRecetaWindow nuevaRecetaWindow = null;
 	private EditarRecetaWindow editarRecetaWindow = null;
 	private NuevaInstruccionWindow nuevaInstruccionWindow = null;
-	private EditarInstruccionWindow editarInstruccionWindow = null;	
+	private EditarInstruccionWindow editarInstruccionWindow = null;
 	
 	public static Window loadWindow(String bxmlFile) throws IOException, SerializationException {
 		URL bxmlUrl = RecetApp.class.getResource(bxmlFile);
 		BXMLSerializer serializer = new BXMLSerializer();
 		return (Window) serializer.readObject(bxmlUrl);
+	}
+	
+	public Component loadComponent(String bxmlFile) throws IOException, SerializationException {
+		URL bxmlUrl = RecetApp.class.getResource(bxmlFile);
+		BXMLSerializer serializer = new BXMLSerializer();
+		return (Component) serializer.readObject(bxmlUrl);
 	}
 	
 	@Override
@@ -93,8 +99,7 @@ public class RecetApp implements Application{
 		} catch (IOException | SerializationException e) {
 			e.printStackTrace();
 		}
-	}
-	
+	}	
 	
 	@Override
 	public boolean shutdown(boolean optional) throws Exception {
@@ -132,6 +137,4 @@ public class RecetApp implements Application{
 	public EditarRecetaWindow getEditarRecetaWindow() {
 		return editarRecetaWindow;
 	}
-	
-	
 }

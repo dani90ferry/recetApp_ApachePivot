@@ -12,11 +12,16 @@ import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
+import org.apache.pivot.wtk.Component;
+import org.apache.pivot.wtk.ComponentKeyListener;
 import org.apache.pivot.wtk.Dialog;
 import org.apache.pivot.wtk.DialogCloseListener;
 import org.apache.pivot.wtk.PushButton;
+import org.apache.pivot.wtk.TabPane;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.TableView;
+import org.apache.pivot.wtk.TextInput;
+import org.apache.pivot.wtk.content.ButtonData;
 
 import dad.recetapp.services.items.InstruccionItem;
 
@@ -27,6 +32,7 @@ public class ComponenteReceta extends TablePane implements Bindable {
 	private List<InstruccionItem> instrucciones;
 	
 	@BXML private TableView instruccionesTable;
+	@BXML private TextInput seccionText;
 	@BXML private PushButton aniadirInstruccion;
 	@BXML private PushButton aniadirIngrediente;
 	
@@ -35,6 +41,16 @@ public class ComponenteReceta extends TablePane implements Bindable {
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		instrucciones = new ArrayList<InstruccionItem>();
 		instruccionesTable.setTableData(instrucciones);
+		
+		seccionText.getComponentKeyListeners().add(new ComponentKeyListener.Adapter() {
+			@Override
+			public boolean keyTyped(Component component, char character) {
+				ButtonData buttonData = new ButtonData();
+				buttonData.setText(seccionText.getText());
+				TabPane.setTabData(ComponenteReceta.this, buttonData);
+				return false;
+			}
+		});
 		
 		aniadirInstruccion.getButtonPressListeners().add(new ButtonPressListener() {
 			@Override

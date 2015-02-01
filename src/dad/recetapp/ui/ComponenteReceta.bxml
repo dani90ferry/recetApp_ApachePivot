@@ -17,7 +17,7 @@
 					<BoxPane>
 						<Label text="Sección:"
 							styles="{horizontalAlignment:'center', verticalAlignment:'center'}" />
-						<TextInput></TextInput>
+						<TextInput bxml:id="seccionText"></TextInput>
 					</BoxPane>
 					<BoxPane>
 						<PushButton buttonData="-" />
