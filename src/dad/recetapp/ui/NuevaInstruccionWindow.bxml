@@ -4,29 +4,28 @@
 	xmlns:content="org.apache.pivot.wtk.content" xmlns:ui="dad.recetapp.ui"
 	xmlns="org.apache.pivot.wtk">
 
-	<FillPane orientation="vertical">
-		<Border styles="{padding:5}">
+	<FillPane>
 			<TablePane>
 				<columns>
 					<TablePane.Column width="1*" />
 				</columns>
 
 				<TablePane.Row height="-1">
-					<!-- <Form>
+					<Form>
 						<Form.Section>
 							<FillPane Form.label="Orden">
-								<TextInput prompt="Orden"></TextInput>
+								<TextInput bxml:id="ordenText" prompt="Orden"></TextInput>
 							</FillPane>
 							<BoxPane Form.label="Descripción">
 								<Border>
 									<ScrollPane horizontalScrollBarPolicy="FILL_TO_CAPACITY">
-										<TextArea minimumHeight="80"></TextArea>
+										<TextArea bxml:id="descripcionText" minimumHeight="80" minimumWidth="180"></TextArea>
 									</ScrollPane>
 								</Border>
 							</BoxPane>
 						</Form.Section>
-					</Form>  -->
-					
+					</Form>
+					<!--  
 					<TablePane>
 						<columns>
 							<TablePane.Column width="-1" />
@@ -43,6 +42,7 @@
 							</Border>
 						</TablePane.Row>
 					</TablePane>
+					-->
 				</TablePane.Row>
 
 				<TablePane.Row height="1*">
@@ -52,6 +52,5 @@
 					</BoxPane>
 				</TablePane.Row>
 			</TablePane>
-		</Border>
 	</FillPane>
 </ui:NuevaInstruccionWindow>

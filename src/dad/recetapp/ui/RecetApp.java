@@ -30,11 +30,11 @@ public class RecetApp implements Application{
 		return (Window) serializer.readObject(bxmlUrl);
 	}
 	
-	public Component loadComponent(String bxmlFile) throws IOException, SerializationException {
-		URL bxmlUrl = RecetApp.class.getResource(bxmlFile);
-		BXMLSerializer serializer = new BXMLSerializer();
-		return (Component) serializer.readObject(bxmlUrl);
-	}
+//	public Component loadComponent(String bxmlFile) throws IOException, SerializationException {
+//		URL bxmlUrl = RecetApp.class.getResource(bxmlFile);
+//		BXMLSerializer serializer = new BXMLSerializer();
+//		return (Component) serializer.readObject(bxmlUrl);
+//	}
 	
 	@Override
 	public void startup(Display display, Map<String, String> properties)

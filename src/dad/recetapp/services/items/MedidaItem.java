@@ -38,4 +38,8 @@ public class MedidaItem {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return nombre;
+	}
 }

@@ -28,5 +28,9 @@ public class TipoIngredienteItem {
 		}
 		return false;
 	}
-
+	
+	@Override
+	public String toString() {
+		return nombre;
+	}
 }

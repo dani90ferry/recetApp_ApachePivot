@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.apache.pivot.beans.BXML;
+import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
@@ -13,6 +14,7 @@ import org.apache.pivot.util.Resources;
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
+import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.Spinner;
@@ -41,12 +43,11 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 	@BXML private PushButton cancelarButton;
 	@BXML private PushButton crearButton;
 	@BXML private TabPane recetasTab;
-	
-	@BXML private ComponenteReceta componenteReceta;
 
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		initCategoriaListButton();
+		initRecetasTab();
 		
 		cancelarButton.getButtonPressListeners().add(new ButtonPressListener() {	
 			public void buttonPressed(Button button) {
@@ -66,7 +67,7 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 				if(selectedIndex == recetasTab.getLength() - 2) {
 					ComponenteReceta c = null;
 					try {
-						c = (ComponenteReceta) recetApp.loadComponent("/dad/recetapp/ui/ComponenteReceta.bxml");
+						c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/ComponenteReceta.bxml");
 					} catch (IOException | SerializationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -78,7 +79,7 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 			}
 		});
 	}
-
+	
 	private void initCategoriaListButton() {
 		java.util.List<CategoriaItem> aux;
 		try {
@@ -94,12 +95,16 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 		}
 	}
 	
-	private List<CategoriaItem> convertirList(java.util.List<CategoriaItem> listUtil) {
-		List<CategoriaItem> aux = new ArrayList<CategoriaItem>();
-		for(CategoriaItem c : listUtil) {
-			aux.add(c);
-		}
-		return aux;
+	private void initRecetasTab() {
+		ComponenteReceta c = null;
+		try {
+			c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/ComponenteReceta.bxml");
+		} catch (IOException | SerializationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		recetasTab.getTabs().insert(c, 0);
+		recetasTab.setSelectedIndex(0);
 	}
 	
 	protected void onCrearButtonPressed() {
@@ -127,8 +132,29 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 		close();
 	}
 	
+	private List<CategoriaItem> convertirList(java.util.List<CategoriaItem> listUtil) {
+		List<CategoriaItem> aux = new ArrayList<CategoriaItem>();
+		for(CategoriaItem c : listUtil) {
+			aux.add(c);
+		}
+		return aux;
+	}
+	
+	private Component loadComponent(String bxmlFile) throws IOException, SerializationException {
+		URL bxmlUrl = RecetApp.class.getResource(bxmlFile);
+		BXMLSerializer serializer = new BXMLSerializer();
+		return (Component) serializer.readObject(bxmlUrl);
+	}
+	
+	public void removeSelectedTab() {
+		//El segundo argumento de remove indica cuantas tabs se eliminar a partir del índice
+//		recetasTab.getTabs().remove(recetasTab.getSelectedIndex(), 1);
+//		recetasTab.remove(recetasTab.getSelectedIndex(), 1);
+		System.out.println("Hola");
+	}
+	
 	public void setRecetApp(RecetApp recetApp) {
 		this.recetApp = recetApp;
-		componenteReceta.setWindowsApp(recetApp);
+//		componenteReceta.setWindowsApp(recetApp);
 	}
 }

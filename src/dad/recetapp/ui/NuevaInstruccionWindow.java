@@ -12,7 +12,6 @@ import org.apache.pivot.wtk.Dialog;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.TextArea;
 import org.apache.pivot.wtk.TextInput;
-import org.apache.pivot.wtk.Window;
 
 public class NuevaInstruccionWindow extends Dialog implements Bindable {
 	

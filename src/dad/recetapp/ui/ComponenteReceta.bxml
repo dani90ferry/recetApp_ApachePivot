@@ -20,7 +20,7 @@
 						<TextInput bxml:id="seccionText"></TextInput>
 					</BoxPane>
 					<BoxPane>
-						<PushButton buttonData="-" />
+						<PushButton bxml:id="eliminarTab" buttonData="-" />
 					</BoxPane>
 				</TablePane.Row>
 			</TablePane>
@@ -36,7 +36,7 @@
 							<TablePane.Row height="1*">
 								<Border>
 									<ScrollPane horizontalScrollBarPolicy="FILL_TO_CAPACITY">
-										<TableView bxml:id="ingredientesView" selectMode="MULTI">
+										<TableView bxml:id="ingredientesTable" selectMode="MULTI">
 											<columns>
 												<TableView.Column name="cantidad" width="1*"
 													headerData="Cantidad" />
@@ -63,7 +63,7 @@
 											</rowEditor>
 										</TableView>
 										<columnHeader>
-											<TableViewHeader tableView="$ingredientesView" />
+											<TableViewHeader tableView="$ingredientesTable" />
 										</columnHeader>
 									</ScrollPane>
 								</Border>
@@ -71,15 +71,15 @@
 							<TablePane.Row>
 							<Border styles="{padding:{top:5}, thickness:0}">
 								<BoxPane styles="{horizontalAlignment:'right'}">
-									<PushButton bxml:id="aniadirIngrediente">
+									<PushButton bxml:id="aniadirIngredienteButton">
 										<content:ButtonData
 											icon="/dad/recetapp/ui/images/add-icon-20x20.png" />
 									</PushButton>
-									<PushButton>
+									<PushButton bxml:id="editarIngredienteButton">
 										<content:ButtonData
 											icon="/dad/recetapp/ui/images/edit-icon-20x20.png" />
 									</PushButton>
-									<PushButton>
+									<PushButton bxml:id="eliminarIngredienteButton">
 										<content:ButtonData
 											icon="/dad/recetapp/ui/images/delete-icon-20x20.png" />
 									</PushButton>
@@ -128,15 +128,15 @@
 							<TablePane.Row>
 							<Border styles="{padding:{top:5}, thickness:0}">
 								<BoxPane styles="{horizontalAlignment:'right'}">
-									<PushButton bxml:id="aniadirInstruccion">
+									<PushButton bxml:id="aniadirInstruccionButton">
 										<content:ButtonData
 											icon="/dad/recetapp/ui/images/add-icon-20x20.png" />
 									</PushButton>
-									<PushButton>
+									<PushButton bxml:id="editarInstruccionButton">
 										<content:ButtonData
 											icon="/dad/recetapp/ui/images/edit-icon-20x20.png" />
 									</PushButton>
-									<PushButton>
+									<PushButton bxml:id="eliminarInstruccionButton">
 										<content:ButtonData
 											icon="/dad/recetapp/ui/images/delete-icon-20x20.png" />
 									</PushButton>
