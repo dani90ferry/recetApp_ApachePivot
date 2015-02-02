@@ -201,28 +201,29 @@ public class RecetasPane extends TablePane implements Bindable {
 		StringBuffer mensaje = new StringBuffer();
 		mensaje.append("¿Desea eliminar las siguientes recetas?\n\n");
 		
-		java.util.List<RecetaListItem> eliminados = new java.util.ArrayList<RecetaListItem>();
+		java.util.List<RecetaListFormatItem> eliminados = new java.util.ArrayList<RecetaListFormatItem>();
 		Sequence<?> seleccionados = recetasTable.getSelectedRows();
 		
 		if(seleccionados.getLength() != 0) {
 			for (int i = 0; i < seleccionados.getLength(); i++) {
-				mensaje.append("- " + ((RecetaListItem)seleccionados.get(i)).getNombre() + "\n");
+				mensaje.append("- " + ((RecetaListFormatItem)seleccionados.get(i)).getNombre() + "\n");
 			}
 			Prompt confirmar = new Prompt(MessageType.WARNING, mensaje.toString(), new ArrayList<String>("Sí", "No"));
 			confirmar.open(this.getWindow(), new SheetCloseListener() {
 				public void sheetClosed(Sheet sheet) {
 					if (confirmar.getResult() && confirmar.getSelectedOption().equals("Sí")) {
 						for (int i = 0; i < seleccionados.getLength(); i++) {
-							eliminados.add((RecetaListItem) seleccionados.get(i));
-							recetas.remove(convert((RecetaListItem)seleccionados.get(i)));
+							eliminados.add((RecetaListFormatItem) seleccionados.get(i));
+							recetas.remove((RecetaListFormatItem)seleccionados.get(i));
 						}
-						for (RecetaListItem e : eliminados) {
+						for (RecetaListFormatItem e : eliminados) {
 							try {
 								ServiceLocator.getRecetasService().eliminarReceta(e.getId());
 							} catch (ServiceException e1) {
 							
 							}
 						}
+						recetApp.getPrincipalWindow().setNumRecetasText("" + recetas.getLength());
 					}
 				}
 			});
@@ -232,7 +233,7 @@ public class RecetasPane extends TablePane implements Bindable {
 //		recetas.clear();
 //		initRecetasTable();
 		//Actualizar el número de recetas
-		recetApp.getPrincipalWindow().setNumRecetasText("" + recetas.getLength());
+		
 	}
 	
 	protected void onAniadirButtonPressed() {
