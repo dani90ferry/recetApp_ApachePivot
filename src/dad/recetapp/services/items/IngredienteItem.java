@@ -46,5 +46,4 @@ public class IngredienteItem {
 		}
 		return false;
 	}
-	
 }

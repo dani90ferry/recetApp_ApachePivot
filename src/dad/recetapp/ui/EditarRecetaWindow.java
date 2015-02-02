@@ -1,21 +1,31 @@
 package dad.recetapp.ui;
 
+import java.io.IOException;
 import java.net.URL;
 
 
 
 
+
+
+
 import org.apache.pivot.beans.BXML;
+import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
+import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.util.Resources;
+import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
+import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.Spinner;
+import org.apache.pivot.wtk.TabPane;
+import org.apache.pivot.wtk.TabPaneSelectionListener;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.Window;
 
@@ -35,6 +45,7 @@ public class EditarRecetaWindow extends Window implements Bindable {
 	@BXML private Spinner tThermoSSpinner;
 	@BXML private PushButton cancelarButton;
 	@BXML private PushButton guardarButton;
+	@BXML private TabPane recetasTab;
 	
 	@BXML private ComponenteReceta componenteReceta;
 	
@@ -42,6 +53,7 @@ public class EditarRecetaWindow extends Window implements Bindable {
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		initCategoriaListButton();
+		
 		cancelarButton.getButtonPressListeners().add(new ButtonPressListener() {	
 			public void buttonPressed(Button button) {
 				 onCancelarButtonPressed();		
@@ -53,7 +65,30 @@ public class EditarRecetaWindow extends Window implements Bindable {
 				 onGuardadButtonPressed();		
 			}
 		});
-
+		
+		recetasTab.getTabPaneSelectionListeners().add(new TabPaneSelectionListener.Adapter() {
+			@Override
+			public Vote previewSelectedIndexChange(TabPane tabPane, int selectedIndex) {
+				if(selectedIndex == recetasTab.getLength() - 2) {
+					ComponenteReceta c = null;
+					try {
+						c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/ComponenteReceta.bxml");
+					} catch (IOException | SerializationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+					recetasTab.getTabs().insert(c, recetasTab.getLength() - 2);
+					recetasTab.setSelectedIndex(recetasTab.getLength() - 3);
+				}
+				return super.previewSelectedIndexChange(tabPane, selectedIndex);
+			}
+		});
+	}
+	
+	private Component loadComponent(String bxmlFile) throws IOException, SerializationException {
+		URL bxmlUrl = RecetApp.class.getResource(bxmlFile);
+		BXMLSerializer serializer = new BXMLSerializer();
+		return (Component) serializer.readObject(bxmlUrl);
 	}
 
 	protected void onGuardadButtonPressed() {

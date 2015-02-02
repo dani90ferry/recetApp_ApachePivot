@@ -304,6 +304,18 @@ public class ComponenteReceta extends TablePane implements Bindable {
 		this.recetApp = windowsApp;
 	}
 	
+	public String getSeccion() {
+		return seccionText.getText();
+	}
+	
+	public List<IngredienteItem> getIngredientes() {
+		return ingredientes;
+	}
+	
+	public List<InstruccionItem> getInstrucciones() {
+		return instrucciones;
+	}
+	
 	public ComponenteReceta getComponenteReceta(){
 		return this;
 	}

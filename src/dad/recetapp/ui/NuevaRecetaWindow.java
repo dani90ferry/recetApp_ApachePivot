@@ -3,12 +3,15 @@ package dad.recetapp.ui;
 import java.io.IOException;
 import java.net.URL;
 
+import javafx.scene.control.Tab;
+
 import org.apache.pivot.beans.BXML;
 import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
+import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.util.Vote;
@@ -19,6 +22,7 @@ import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.Spinner;
 import org.apache.pivot.wtk.TabPane;
+import org.apache.pivot.wtk.TabPane.TabSequence;
 import org.apache.pivot.wtk.TabPaneSelectionListener;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.Window;
@@ -26,7 +30,10 @@ import org.apache.pivot.wtk.Window;
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.items.CategoriaItem;
+import dad.recetapp.services.items.IngredienteItem;
+import dad.recetapp.services.items.InstruccionItem;
 import dad.recetapp.services.items.RecetaItem;
+import dad.recetapp.services.items.SeccionItem;
 
 public class NuevaRecetaWindow extends Window implements Bindable{
 	
@@ -111,11 +118,28 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 		RecetaItem receta = new RecetaItem();
 		receta.setNombre(nombreText.getText());
 		receta.setCantidad(Integer.valueOf(cantidadText.getText()));
-		//TODO Arreglar
 		receta.setPara((String) paraListButton.getSelectedItem());
 		receta.setTiempoTotal(tTotalMSpinner.getSelectedIndex() * 60 + tTotalSSpinner.getSelectedIndex());
 		receta.setTiempoThermomix(tThermoMSpinner.getSelectedIndex() * 60 + tThermoSSpinner.getSelectedIndex());
 		receta.setCategoria((CategoriaItem)categoriaListButton.getSelectedItem());
+		
+		TabSequence tabs = recetasTab.getTabs();
+		//Se utiliza en vez de un for-each para evitar que intente utilizar la pestaña +
+		for(int i = 0; i < tabs.getLength() - 1; i++) {
+//			System.out.println(((ComponenteReceta)tabs.get(i)).getSeccion());
+			ComponenteReceta comp = (ComponenteReceta)tabs.get(i);
+			SeccionItem seccion = new SeccionItem();
+			seccion.setNombre(comp.getSeccion());
+			//Añadimos a la seccion los ingredientes de la tabla del componete
+			for (IngredienteItem ingrediente : comp.getIngredientes()) {
+				seccion.getIngredientes().add(ingrediente);
+			}
+			//Añadimos a la seccion las instrucciones de la tabla del componete
+			for (InstruccionItem instruccion : comp.getInstrucciones()) {
+				seccion.getInstrucciones().add(instruccion);
+			}
+			receta.getSecciones().add(seccion);
+		}
 		
 		try {
 			ServiceLocator.getRecetasService().crearReceta(receta);
