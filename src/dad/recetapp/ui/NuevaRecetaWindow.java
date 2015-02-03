@@ -50,6 +50,7 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 	@BXML private PushButton cancelarButton;
 	@BXML private PushButton crearButton;
 	@BXML private TabPane recetasTab;
+	
 
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
@@ -149,6 +150,7 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 		}
 		
 		close();
+		recetApp.getPrincipalWindow().getRecetasPane().actualizarTabla();
 		//TODO cuando añades una receta no se carga en la tabla recetas
 	}
 
@@ -173,8 +175,8 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 	public void removeSelectedTab() {
 		//El segundo argumento de remove indica cuantas tabs se eliminar a partir del índice
 //		recetasTab.getTabs().remove(recetasTab.getSelectedIndex(), 1);
-//		recetasTab.remove(recetasTab.getSelectedIndex(), 1);
-		System.out.println("Hola");
+		recetasTab.remove(recetasTab.getSelectedIndex(), 1);
+		System.out.println(recetasTab.getSelectedIndex());
 	}
 	
 	public void setRecetApp(RecetApp recetApp) {

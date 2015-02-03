@@ -9,6 +9,7 @@ import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Dialog;
+import org.apache.pivot.wtk.Prompt;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.TextArea;
 import org.apache.pivot.wtk.TextInput;
@@ -21,6 +22,8 @@ public class NuevaInstruccionWindow extends Dialog implements Bindable {
 	@BXML private PushButton anadirButton;
 	@BXML private TextInput ordenText;
 	@BXML private TextArea descripcionText;
+
+	private Object cantidad;
 	
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
@@ -41,8 +44,14 @@ public class NuevaInstruccionWindow extends Dialog implements Bindable {
 
 	
 	protected void onAnadirButtonButtonPressed() {
+		try {
+		cantidad = Integer.parseInt(ordenText.getText());
 		cancelado = false;
 		close();
+		}catch (NumberFormatException e){
+			Prompt mensaje = new Prompt("No se permiten letras o el campo orden vacio");
+			mensaje.open(this.getWindow());
+		}
 	}
 
 	protected void onCancelarButtonButtonPressed() {

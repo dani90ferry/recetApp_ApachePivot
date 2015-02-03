@@ -12,6 +12,7 @@ import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Dialog;
 import org.apache.pivot.wtk.ListButton;
+import org.apache.pivot.wtk.Prompt;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.TextInput;
 
@@ -28,6 +29,8 @@ public class NuevoIngredienteWindow extends Dialog implements Bindable {
 	@BXML private TextInput cantidadText;
 	@BXML private ListButton medidaListButton;
 	@BXML private ListButton tipoListButton;
+
+	private Integer cantidad;
 	
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
@@ -96,8 +99,31 @@ public class NuevoIngredienteWindow extends Dialog implements Bindable {
 	}
 	
 	protected void onAnadirButtonButtonPressed() {
-		cancelado = false;
-		close();
+		Boolean error = false;
+		try {
+		cantidad = Integer.parseInt(cantidadText.getText());
+		if(medidaListButton.getSelectedIndex() == 0) {
+			Prompt mensaje = new Prompt("Debes seleccionar una medida");
+			mensaje.open(this.getWindow());
+			error = true;
+		}
+		
+		if(tipoListButton.getSelectedIndex() == 0) {
+			Prompt mensaje = new Prompt("Debes seleccionar un tipo ingrediente");
+			mensaje.open(this.getWindow());
+			error = true;
+		}
+		
+		if(!error){
+			cancelado = false;
+			close();
+		}
+		
+		}catch (NumberFormatException e){
+			Prompt mensaje = new Prompt("No se permiten letras o el campo vacio");
+			mensaje.open(this.getWindow());
+		}
+		
 	}
 
 	protected void onCancelarButtonButtonPressed() {
@@ -109,7 +135,7 @@ public class NuevoIngredienteWindow extends Dialog implements Bindable {
 	}
 	
 	public Integer getCantidad() {
-		return Integer.valueOf(cantidadText.getText());
+		return cantidad;
 	}
 
 	public MedidaItem getMedidaSelectedItem() {

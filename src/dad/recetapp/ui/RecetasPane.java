@@ -201,7 +201,14 @@ public class RecetasPane extends TablePane implements Bindable {
 	}
 
 	protected void onEditarButtonPressed() {
-		recetApp.openEditarRecetaWindow();
+		Sequence<?> seleccionados = recetasTable.getSelectedRows();
+		if(seleccionados.getLength() == 1){
+			recetApp.openEditarRecetaWindow();
+		} else {
+			Prompt mensaje = new Prompt("Debes de seleccionar una receta");
+			mensaje.open(this.getWindow());
+		}
+		
 	}
 	
 	protected void onEliminarButtonPressed() {
@@ -249,5 +256,11 @@ public class RecetasPane extends TablePane implements Bindable {
 	
 	public void setWindowsApp(RecetApp windowsApp) {
 		this.recetApp = windowsApp;
+	}
+	
+	public void actualizarTabla(){
+		recetas.clear();
+		initRecetasTable();
+		recetApp.getPrincipalWindow().setNumRecetasText("" + recetas.getLength());
 	}
 }

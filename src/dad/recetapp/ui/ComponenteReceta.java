@@ -71,15 +71,8 @@ public class ComponenteReceta extends TablePane implements Bindable {
 		eliminarTab.getButtonPressListeners().add(new ButtonPressListener() {
 			@Override
 			public void buttonPressed(Button button) {
-				try {
-					NuevaRecetaWindow nrw = (NuevaRecetaWindow) RecetApp.loadWindow("/dad/recetapp/ui/NuevaRecetaWindow.bxml");
-					nrw.removeSelectedTab();
-				} catch (IOException | SerializationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
+				onEliminarTabButtonPressed();
+			}});
 		
 		aniadirIngredienteButton.getButtonPressListeners().add(new ButtonPressListener() {
 			@Override
@@ -124,6 +117,26 @@ public class ComponenteReceta extends TablePane implements Bindable {
 		});
 	}
 
+	protected void onEliminarTabButtonPressed() {
+		NuevaRecetaWindow nrw;
+		try {
+			nrw = (NuevaRecetaWindow) RecetApp.loadWindow("/dad/recetapp/ui/NuevaRecetaWindow.bxml");
+			nrw.removeSelectedTab();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SerializationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*
+		System.out.println(recetApp);
+		recetApp.getNuevaRecetaWindow().removeSelectedTab();
+		*/
+	
+		
+	}
+
 	protected void onAniadirIngredienteButtonPressed() {
 		try {
 			nuevoIngredienteWindow = (NuevoIngredienteWindow) RecetApp.loadWindow("/dad/recetapp/ui/NuevoIngredienteWindow.bxml");
@@ -141,7 +154,12 @@ public class ComponenteReceta extends TablePane implements Bindable {
 	
 	protected void onEditarIngredienteButtonPressed() {
 		try {
-			IngredienteItem ingrediente = (IngredienteItem)ingredientesTable.getSelectedRow();
+			
+			Sequence<?> seleccionados = ingredientesTable.getSelectedRows();
+			
+			if(seleccionados.getLength() == 1) {
+				
+			IngredienteItem ingrediente = (IngredienteItem) seleccionados.get(0);
 			
 			editarIngredienteWindow = (EditarIngredienteWindow) RecetApp.loadWindow("/dad/recetapp/ui/EditarIngredienteWindow.bxml");
 			editarIngredienteWindow.setTitle("Editar ingrediente para '" + seccionText.getText() + "'");
@@ -153,6 +171,10 @@ public class ComponenteReceta extends TablePane implements Bindable {
 					onEditarIngredienteDialogClosed(dialog);
 				}
 			});
+			} else {
+				Prompt mensaje = new Prompt("Debes de seleccionar un ingrediente");
+				mensaje.open(this.getWindow());
+			}
 		} catch (IOException | SerializationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -189,6 +211,9 @@ public class ComponenteReceta extends TablePane implements Bindable {
 					}
 				}
 			});
+		} else {
+			Prompt mensaje2 = new Prompt("Debes de seleccionar un ingrediente");
+			mensaje2.open(this.getWindow());
 		}
 	}
 
@@ -231,7 +256,12 @@ public class ComponenteReceta extends TablePane implements Bindable {
 	
 	protected void onEditarInstruccionButtonPressed() {
 		try {
-			InstruccionItem instruccion = (InstruccionItem)instruccionesTable.getSelectedRow();
+			
+			Sequence<?> seleccionados = instruccionesTable.getSelectedRows();
+			
+			if(seleccionados.getLength() == 1) {
+			
+			InstruccionItem instruccion = (InstruccionItem) seleccionados.get(0);
 			
 			editarInstruccionWindow = (EditarInstruccionWindow) RecetApp.loadWindow("/dad/recetapp/ui/EditarInstruccionWindow.bxml");
 			editarInstruccionWindow.setTitle("Editar instrucción para '" + seccionText.getText() + "'");
@@ -241,7 +271,11 @@ public class ComponenteReceta extends TablePane implements Bindable {
 				public void dialogClosed(Dialog dialog, boolean modal) {
 					onEditarInstruccionDialogClosed(dialog);
 				}
-			});
+			}); 
+		} else {
+			Prompt mensaje = new Prompt("Debes de seleccionar una instrucción");
+			mensaje.open(this.getWindow());
+		}
 		} catch (IOException | SerializationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -278,6 +312,9 @@ public class ComponenteReceta extends TablePane implements Bindable {
 					}
 				}
 			});
+		} else {
+			Prompt mensaje2 = new Prompt("Debes de seleccionar un ingrediente");
+			mensaje2.open(this.getWindow());
 		}
 	}
 
@@ -302,6 +339,7 @@ public class ComponenteReceta extends TablePane implements Bindable {
 
 	public void setWindowsApp(RecetApp windowsApp) {
 		this.recetApp = windowsApp;
+		System.out.println(recetApp);
 	}
 	
 	public String getSeccion() {
