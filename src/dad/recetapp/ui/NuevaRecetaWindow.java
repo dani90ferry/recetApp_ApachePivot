@@ -53,10 +53,7 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 	
 
 	@Override
-	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
-		initCategoriaListButton();
-		initRecetasTab();
-		
+	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {		
 		cancelarButton.getButtonPressListeners().add(new ButtonPressListener() {	
 			public void buttonPressed(Button button) {
 				 onCancelarButtonPressed();		
@@ -76,6 +73,7 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 					ComponenteReceta c = null;
 					try {
 						c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/ComponenteReceta.bxml");
+						c.setRecetApp(recetApp);
 					} catch (IOException | SerializationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -107,6 +105,7 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 		ComponenteReceta c = null;
 		try {
 			c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/ComponenteReceta.bxml");
+			c.setRecetApp(recetApp);
 		} catch (IOException | SerializationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -173,14 +172,20 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 	}
 	
 	public void removeSelectedTab() {
+		int i = recetasTab.getSelectedIndex();
 		//El segundo argumento de remove indica cuantas tabs se eliminar a partir del índice
-//		recetasTab.getTabs().remove(recetasTab.getSelectedIndex(), 1);
-		recetasTab.remove(recetasTab.getSelectedIndex(), 1);
-		System.out.println(recetasTab.getSelectedIndex());
+		recetasTab.getTabs().remove(i, 1);
+		if(i == 0) {
+			recetasTab.setSelectedIndex(i);
+		}
+		else {
+			recetasTab.setSelectedIndex(i - 1);
+		}
 	}
 	
 	public void setRecetApp(RecetApp recetApp) {
 		this.recetApp = recetApp;
-//		componenteReceta.setWindowsApp(recetApp);
+		initCategoriaListButton();
+		initRecetasTab();
 	}
 }

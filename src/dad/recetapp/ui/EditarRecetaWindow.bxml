@@ -72,12 +72,6 @@
 				</TablePane.Row>
 				<TablePane.Row height="1*">
 					<TabPane bxml:id="recetasTab">
-						<!--<FillPane>
-							<TabPane.tabData>
-								<content:ButtonData text="" />
-							</TabPane.tabData>
-							<bxml:include bxml:id="componenteReceta" src="ComponenteReceta.bxml" />
-						</FillPane>-->
 						<FillPane>
 							<TabPane.tabData>
 								<content:ButtonData text="+" />

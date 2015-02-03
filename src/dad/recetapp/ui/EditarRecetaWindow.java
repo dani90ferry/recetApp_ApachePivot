@@ -56,7 +56,6 @@ public class EditarRecetaWindow extends Window implements Bindable {
 	
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
-		initCategoriaListButton();
 		
 		cancelarButton.getButtonPressListeners().add(new ButtonPressListener() {	
 			public void buttonPressed(Button button) {
@@ -77,6 +76,7 @@ public class EditarRecetaWindow extends Window implements Bindable {
 					ComponenteReceta c = null;
 					try {
 						c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/ComponenteReceta.bxml");
+						c.setRecetApp(recetApp);
 					} catch (IOException | SerializationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -115,6 +115,7 @@ public class EditarRecetaWindow extends Window implements Bindable {
 				ComponenteReceta c = null;
 				try {
 					c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/ComponenteReceta.bxml");
+					c.setRecetApp(recetApp);
 				} catch (IOException | SerializationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -205,6 +206,7 @@ public class EditarRecetaWindow extends Window implements Bindable {
 		ComponenteReceta c = null;
 		try {
 			c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/ComponenteReceta.bxml");
+			c.setRecetApp(recetApp);
 		} catch (IOException | SerializationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -213,6 +215,18 @@ public class EditarRecetaWindow extends Window implements Bindable {
 		recetasTab.setSelectedIndex(0);
 	}
 	
+	public void removeSelectedTab() {
+		System.out.println(recetApp);
+		int i = recetasTab.getSelectedIndex();
+		//El segundo argumento de remove indica cuantas tabs se eliminan a partir del índice
+		recetasTab.getTabs().remove(i, 1);
+		if(i == 0) {
+			recetasTab.setSelectedIndex(i);
+		}
+		else {
+			recetasTab.setSelectedIndex(i - 1);
+		}
+	}	
 	
 	private void initCategoriaListButton() {
 		java.util.List<CategoriaItem> aux;
@@ -240,6 +254,7 @@ public class EditarRecetaWindow extends Window implements Bindable {
 	public void setRecetApp(RecetApp recetApp) {
 		this.recetApp = recetApp;
 		//Una vez se ha llamado a loadWindow en recetApp, se invoca este método. Ahora recetApp tiene valor.
+		initCategoriaListButton();
 		cargarReceta();
 	}	
 }

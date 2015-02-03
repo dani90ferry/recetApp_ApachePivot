@@ -118,21 +118,17 @@ public class ComponenteReceta extends TablePane implements Bindable {
 	}
 
 	protected void onEliminarTabButtonPressed() {
-		NuevaRecetaWindow nrw;
-		try {
-			nrw = (NuevaRecetaWindow) RecetApp.loadWindow("/dad/recetapp/ui/NuevaRecetaWindow.bxml");
-			nrw.removeSelectedTab();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SerializationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		/*
-		System.out.println(recetApp);
-		recetApp.getNuevaRecetaWindow().removeSelectedTab();
-		*/
+		NuevaRecetaWindow nuevaRecetaWindow = recetApp.getNuevaRecetaWindow();
+		EditarRecetaWindow editarRecetaWindow = recetApp.getEditarRecetaWindow();
+		
+		if(nuevaRecetaWindow != null)
+			recetApp.getNuevaRecetaWindow().removeSelectedTab();
+		if(editarRecetaWindow != null)
+			recetApp.getEditarRecetaWindow().removeSelectedTab();
+		
+		
+//		System.out.println(recetApp);
+//		recetApp.getNuevaRecetaWindow().removeSelectedTab();
 	
 		
 	}
@@ -337,9 +333,8 @@ public class ComponenteReceta extends TablePane implements Bindable {
 		}
 	}
 
-	public void setWindowsApp(RecetApp windowsApp) {
-		this.recetApp = windowsApp;
-		System.out.println(recetApp);
+	public void setRecetApp(RecetApp recetApp) {
+		this.recetApp = recetApp;
 	}
 	
 	public String getSeccion() {
