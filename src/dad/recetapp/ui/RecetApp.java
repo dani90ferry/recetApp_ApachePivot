@@ -40,7 +40,7 @@ public class RecetApp implements Application{
 	public void startup(Display display, Map<String, String> properties)
 			throws Exception {
 		primaryDisplay = display;
-		openInicialWindow();	
+		openInicialWindow();
 	}
 	
 	public void openInicialWindow() {
