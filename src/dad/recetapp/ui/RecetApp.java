@@ -77,6 +77,7 @@ public class RecetApp implements Application{
 	public void openEditarRecetaWindow() {
 		try {
 			editarRecetaWindow = (EditarRecetaWindow) loadWindow("/dad/recetapp/ui/EditarRecetaWindow.bxml");
+			editarRecetaWindow.setRecetApp(this);
 			editarRecetaWindow.open(primaryDisplay);
 		} catch (IOException | SerializationException e) {
 			e.printStackTrace();

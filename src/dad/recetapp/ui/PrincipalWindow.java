@@ -36,4 +36,8 @@ public class PrincipalWindow extends Window implements Bindable {
 	public void setNumRecetasText(String text) {
 		numRecetas.setText(text);
 	}
+
+	public RecetasPane getRecetasPane() {
+		return recetasPane;
+	}
 }

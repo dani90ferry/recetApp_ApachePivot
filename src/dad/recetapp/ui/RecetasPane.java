@@ -1,6 +1,8 @@
 package dad.recetapp.ui;
 
+import java.io.IOException;
 import java.net.URL;
+
 
 
 
@@ -22,6 +24,7 @@ import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.collections.Sequence;
+import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
@@ -127,6 +130,10 @@ public class RecetasPane extends TablePane implements Bindable {
 			}
 		});
 	}
+	
+	public TableView getRecetasTable() {
+		return recetasTable;
+	}
 
 	protected void aplicarFiltro() {
 		java.util.List<RecetaListItem> aux;
@@ -194,7 +201,7 @@ public class RecetasPane extends TablePane implements Bindable {
 	}
 
 	protected void onEditarButtonPressed() {
-		recetApp.openEditarRecetaWindow();	
+		recetApp.openEditarRecetaWindow();
 	}
 	
 	protected void onEliminarButtonPressed() {

@@ -308,6 +308,10 @@ public class ComponenteReceta extends TablePane implements Bindable {
 		return seccionText.getText();
 	}
 	
+	public void setSeccion(String seccion) {
+		seccionText.setText(seccion);
+	}
+	
 	public List<IngredienteItem> getIngredientes() {
 		return ingredientes;
 	}
