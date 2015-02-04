@@ -45,7 +45,6 @@
 												<TableView.Column name="tipo" width="1*"
 													headerData="Tipo" />
 											</columns>
-											<rowEditor>
 												<content:TableViewRowEditor
 													editEffect="VERTICAL_SLIDE">
 													<cellEditors>
@@ -60,7 +59,6 @@
 														</cantidad>
 													</cellEditors>
 												</content:TableViewRowEditor>
-											</rowEditor>
 										</TableView>
 										<columnHeader>
 											<TableViewHeader tableView="$ingredientesTable" />
@@ -105,7 +103,6 @@
 												<TableView.Column name="descripcion" width="1*"
 													headerData="Descripción" />
 											</columns>
-											<rowEditor>
 												<content:TableViewRowEditor
 													editEffect="VERTICAL_SLIDE">
 													<cellEditors>
@@ -117,7 +114,6 @@
 														</descripcion>
 													</cellEditors>
 												</content:TableViewRowEditor>
-											</rowEditor>
 										</TableView>
 										<columnHeader>
 											<TableViewHeader tableView="$instruccionesTable" />

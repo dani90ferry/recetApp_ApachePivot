@@ -12,6 +12,7 @@ import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Dialog;
 import org.apache.pivot.wtk.ListButton;
+import org.apache.pivot.wtk.Prompt;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.TextInput;
 
@@ -20,14 +21,16 @@ import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.items.MedidaItem;
 import dad.recetapp.services.items.TipoIngredienteItem;
 
-public class EditarIngredienteWindow extends Dialog implements Bindable {
+public class NuevoIngredienteDialog extends Dialog implements Bindable {
 	private Boolean cancelado = true;
 
 	@BXML private PushButton cancelarButton;
-	@BXML private PushButton guardarButton;
+	@BXML private PushButton anadirButton;
 	@BXML private TextInput cantidadText;
 	@BXML private ListButton medidaListButton;
 	@BXML private ListButton tipoListButton;
+
+	private Integer cantidad;
 	
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
@@ -41,7 +44,7 @@ public class EditarIngredienteWindow extends Dialog implements Bindable {
 			}
 		});
 		
-		guardarButton.getButtonPressListeners().add(new ButtonPressListener() {
+		anadirButton.getButtonPressListeners().add(new ButtonPressListener() {
 			@Override
 			public void buttonPressed(Button button) {
 				onAnadirButtonButtonPressed();
@@ -96,8 +99,31 @@ public class EditarIngredienteWindow extends Dialog implements Bindable {
 	}
 	
 	protected void onAnadirButtonButtonPressed() {
-		cancelado = false;
-		close();
+		Boolean error = false;
+		try {
+		cantidad = Integer.parseInt(cantidadText.getText());
+		if(medidaListButton.getSelectedIndex() == 0) {
+			Prompt mensaje = new Prompt("Debes seleccionar una medida");
+			mensaje.open(this.getWindow());
+			error = true;
+		}
+		
+		if(tipoListButton.getSelectedIndex() == 0) {
+			Prompt mensaje = new Prompt("Debes seleccionar un tipo ingrediente");
+			mensaje.open(this.getWindow());
+			error = true;
+		}
+		
+		if(!error){
+			cancelado = false;
+			close();
+		}
+		
+		}catch (NumberFormatException e){
+			Prompt mensaje = new Prompt("No se permiten letras o el campo vacio");
+			mensaje.open(this.getWindow());
+		}
+		
 	}
 
 	protected void onCancelarButtonButtonPressed() {
@@ -109,26 +135,14 @@ public class EditarIngredienteWindow extends Dialog implements Bindable {
 	}
 	
 	public Integer getCantidad() {
-		return Integer.valueOf(cantidadText.getText());
-	}
-	
-	public void setCantidad(Integer cantidad) {
-		cantidadText.setText("" + cantidad);
+		return cantidad;
 	}
 
 	public MedidaItem getMedidaSelectedItem() {
 		return (MedidaItem) medidaListButton.getSelectedItem();
 	}
 	
-	public void setMedidaSelectedItem(MedidaItem medida) {
-		medidaListButton.setSelectedItem(medida);
-	}
-	
 	public TipoIngredienteItem getTipoSelectedItem() {
 		return (TipoIngredienteItem) tipoListButton.getSelectedItem();
-	}
-	
-	public void setTipoSelectedItem(TipoIngredienteItem medida) {
-		tipoListButton.setSelectedItem(medida);
 	}
 }

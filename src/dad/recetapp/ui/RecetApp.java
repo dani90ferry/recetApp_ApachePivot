@@ -21,8 +21,8 @@ public class RecetApp implements Application{
 	private PrincipalWindow principalWindow = null;
 	private NuevaRecetaWindow nuevaRecetaWindow = null;
 	private EditarRecetaWindow editarRecetaWindow = null;
-	private NuevaInstruccionWindow nuevaInstruccionWindow = null;
-	private EditarInstruccionWindow editarInstruccionWindow = null;
+	private NuevaInstruccionDialog nuevaInstruccionWindow = null;
+	private EditarInstruccionDialog editarInstruccionWindow = null;
 	
 	public static Window loadWindow(String bxmlFile) throws IOException, SerializationException {
 		URL bxmlUrl = RecetApp.class.getResource(bxmlFile);
@@ -45,7 +45,7 @@ public class RecetApp implements Application{
 	
 	public void openInicialWindow() {
 		try {
-			inicialWindow = (InicialWindow) loadWindow("/dad/recetapp/ui/InicialWindow.bxml");
+			inicialWindow = (InicialWindow) loadWindow("/dad/recetapp/ui/bxml/InicialWindow.bxml");
 			inicialWindow.setRecetApp(this);
 			inicialWindow.open(primaryDisplay);
 		} catch (IOException | SerializationException e) {
@@ -55,7 +55,7 @@ public class RecetApp implements Application{
 	
 	public void openPrincipalWindow() {
 		try {
-			principalWindow = (PrincipalWindow) loadWindow("/dad/recetapp/ui/PrincipalWindow.bxml");
+			principalWindow = (PrincipalWindow) loadWindow("/dad/recetapp/ui/bxml/PrincipalWindow.bxml");
 			principalWindow.setRecetApp(this);
 			principalWindow.open(primaryDisplay);
 		} catch (IOException | SerializationException e) {
@@ -65,7 +65,7 @@ public class RecetApp implements Application{
 	
 	public void openNuevaRecetaWindow() {
 		try {
-			nuevaRecetaWindow = (NuevaRecetaWindow) loadWindow("/dad/recetapp/ui/NuevaRecetaWindow.bxml");
+			nuevaRecetaWindow = (NuevaRecetaWindow) loadWindow("/dad/recetapp/ui/bxml/NuevaRecetaWindow.bxml");
 			nuevaRecetaWindow.setRecetApp(this);
 			nuevaRecetaWindow.open(primaryDisplay);
 		} catch (IOException | SerializationException e) {
@@ -76,35 +76,19 @@ public class RecetApp implements Application{
 	
 	public void openEditarRecetaWindow() {
 		try {
-			editarRecetaWindow = (EditarRecetaWindow) loadWindow("/dad/recetapp/ui/EditarRecetaWindow.bxml");
+			editarRecetaWindow = (EditarRecetaWindow) loadWindow("/dad/recetapp/ui/bxml/EditarRecetaWindow.bxml");
 			editarRecetaWindow.setRecetApp(this);
 			editarRecetaWindow.open(primaryDisplay);
 		} catch (IOException | SerializationException e) {
 			e.printStackTrace();
 		}
 	}
-	/*
-	public void openNuevaIntruccionWindow() {
-		try {
-			nuevaInstruccionWindow = (NuevaInstruccionWindow) loadWindow("/dad/recetapp/ui/NuevaInstruccionWindow.bxml");
-			nuevaInstruccionWindow.open(primaryDisplay);
-		} catch (IOException | SerializationException e) {
-			e.printStackTrace();
-		}
-	}
-	*/
-	public void openEditarIntruccionWindow() {
-		try {
-			editarInstruccionWindow = (EditarInstruccionWindow) loadWindow("/dad/recetapp/ui/EditarInstruccionWindow.bxml");
-			editarInstruccionWindow.open(primaryDisplay);
-		} catch (IOException | SerializationException e) {
-			e.printStackTrace();
-		}
-	}	
-	
+
 	@Override
 	public boolean shutdown(boolean optional) throws Exception {
+		if(inicialWindow !=null)
 		inicialWindow.close();
+		if(principalWindow !=null)
 		principalWindow.close();
 		if(nuevaRecetaWindow !=null)
 		nuevaRecetaWindow.close();

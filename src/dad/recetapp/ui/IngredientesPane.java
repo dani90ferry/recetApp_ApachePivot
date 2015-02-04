@@ -121,14 +121,17 @@ public class IngredientesPane extends TablePane implements Bindable {
 					if (confirmar.getResult() && confirmar.getSelectedOption().equals("Sí")) {
 						for (int i = 0; i < seleccionados.getLength(); i++) {
 							eliminados.add((TipoIngredienteItem) seleccionados.get(i));
-							tipoIngredientes.remove((TipoIngredienteItem)seleccionados.get(i));
 						}
 						for (TipoIngredienteItem e : eliminados) {
 							try {
 								TipoIngredienteItem c = ServiceLocator.getTiposIngredienteService().obtenerTipoIngrediente(e.getId());
 								ServiceLocator.getTiposIngredienteService().eliminarTipoIngrediente(c.getId());
+								for (int i = 0; i < seleccionados.getLength(); i++) {
+									tipoIngredientes.remove((TipoIngredienteItem)seleccionados.get(i));
+								}
 							} catch (ServiceException e1) {
-							
+								Prompt mensaje = new Prompt(e1.getMessage());
+								mensaje.open(getWindow());
 							}
 						}
 					}

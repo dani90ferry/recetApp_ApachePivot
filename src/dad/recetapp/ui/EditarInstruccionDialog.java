@@ -9,17 +9,20 @@ import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Dialog;
+import org.apache.pivot.wtk.Prompt;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.TextArea;
 import org.apache.pivot.wtk.TextInput;
 
-public class EditarInstruccionWindow extends Dialog implements Bindable {
+public class EditarInstruccionDialog extends Dialog implements Bindable {
 	private Boolean cancelado = true;
 
 	@BXML private PushButton cancelarButton;
 	@BXML private PushButton guardarButton;
 	@BXML private TextInput ordenText;
 	@BXML private TextArea descripcionText;
+
+	private Integer orden;
 	
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
@@ -40,8 +43,14 @@ public class EditarInstruccionWindow extends Dialog implements Bindable {
 
 	
 	protected void onGuardarButtonButtonPressed() {
-		cancelado = false;
-		close();
+		try {
+			orden = Integer.parseInt(ordenText.getText());
+			cancelado = false;
+			close();
+			}catch (NumberFormatException e){
+				Prompt mensaje = new Prompt("No se permiten letras o el campo orden vacio");
+				mensaje.open(this.getWindow());
+			}
 	}
 
 	protected void onCancelarButtonButtonPressed() {
@@ -53,7 +62,7 @@ public class EditarInstruccionWindow extends Dialog implements Bindable {
 	}
 	
 	public Integer getOrden() {
-		return Integer.valueOf(ordenText.getText());
+		return orden;
 	}
 	
 	public void setOrden(Integer orden) {

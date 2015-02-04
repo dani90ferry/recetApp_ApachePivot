@@ -15,6 +15,7 @@ import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ComponentKeyListener;
+import org.apache.pivot.wtk.ComponentMouseButtonListener;
 import org.apache.pivot.wtk.Dialog;
 import org.apache.pivot.wtk.DialogCloseListener;
 import org.apache.pivot.wtk.MessageType;
@@ -33,10 +34,10 @@ import dad.recetapp.services.items.InstruccionItem;
 
 public class ComponenteReceta extends TablePane implements Bindable {
 	private RecetApp recetApp;
-	private NuevoIngredienteWindow nuevoIngredienteWindow;
-	private EditarIngredienteWindow editarIngredienteWindow;
-	private NuevaInstruccionWindow nuevaInstruccionWindow;
-	private EditarInstruccionWindow editarInstruccionWindow;
+	private NuevoIngredienteDialog nuevoIngredienteDialog;
+	private EditarIngredienteDialog editarIngredienteDialog;
+	private NuevaInstruccionDialog nuevaInstruccionDialog;
+	private EditarInstruccionDialog editarInstruccionDialog;
 	private List<IngredienteItem> ingredientes;
 	private List<InstruccionItem> instrucciones;
 	
@@ -57,6 +58,7 @@ public class ComponenteReceta extends TablePane implements Bindable {
 		ingredientesTable.setTableData(ingredientes);
 		instrucciones = new ArrayList<InstruccionItem>();
 		instruccionesTable.setTableData(instrucciones);
+
 		
 		seccionText.getComponentKeyListeners().add(new ComponentKeyListener.Adapter() {
 			@Override
@@ -135,9 +137,9 @@ public class ComponenteReceta extends TablePane implements Bindable {
 
 	protected void onAniadirIngredienteButtonPressed() {
 		try {
-			nuevoIngredienteWindow = (NuevoIngredienteWindow) RecetApp.loadWindow("/dad/recetapp/ui/NuevoIngredienteWindow.bxml");
-			nuevoIngredienteWindow.setTitle("Nueva ingrediente para '" + seccionText.getText() + "'");
-			nuevoIngredienteWindow.open(getWindow(), new DialogCloseListener() {
+			nuevoIngredienteDialog = (NuevoIngredienteDialog) RecetApp.loadWindow("/dad/recetapp/ui/bxml/NuevoIngredienteDialog.bxml");
+			nuevoIngredienteDialog.setTitle("Nueva ingrediente para '" + seccionText.getText() + "'");
+			nuevoIngredienteDialog.open(getWindow(), new DialogCloseListener() {
 				public void dialogClosed(Dialog dialog, boolean modal) {
 					onNuevoIngredienteDialogClosed(dialog);
 				}
@@ -157,12 +159,12 @@ public class ComponenteReceta extends TablePane implements Bindable {
 				
 			IngredienteItem ingrediente = (IngredienteItem) seleccionados.get(0);
 			
-			editarIngredienteWindow = (EditarIngredienteWindow) RecetApp.loadWindow("/dad/recetapp/ui/EditarIngredienteWindow.bxml");
-			editarIngredienteWindow.setTitle("Editar ingrediente para '" + seccionText.getText() + "'");
-			editarIngredienteWindow.setCantidad(ingrediente.getCantidad());
-			editarIngredienteWindow.setMedidaSelectedItem(ingrediente.getMedida());
-			editarIngredienteWindow.setTipoSelectedItem(ingrediente.getTipo());
-			editarIngredienteWindow.open(getWindow(), new DialogCloseListener() {
+			editarIngredienteDialog = (EditarIngredienteDialog) RecetApp.loadWindow("/dad/recetapp/ui/bxml/EditarIngredienteDialog.bxml");
+			editarIngredienteDialog.setTitle("Editar ingrediente para '" + seccionText.getText() + "'");
+			editarIngredienteDialog.setCantidad(ingrediente.getCantidad());
+			editarIngredienteDialog.setMedidaSelectedItem(ingrediente.getMedida());
+			editarIngredienteDialog.setTipoSelectedItem(ingrediente.getTipo());
+			editarIngredienteDialog.open(getWindow(), new DialogCloseListener() {
 				public void dialogClosed(Dialog dialog, boolean modal) {
 					onEditarIngredienteDialogClosed(dialog);
 				}
@@ -214,7 +216,7 @@ public class ComponenteReceta extends TablePane implements Bindable {
 	}
 
 	protected void onNuevoIngredienteDialogClosed(Dialog dialog) {
-		NuevoIngredienteWindow niw = (NuevoIngredienteWindow) dialog;
+		NuevoIngredienteDialog niw = (NuevoIngredienteDialog) dialog;
 		if (!niw.getCancelado()) {
 			IngredienteItem ingrediente = new IngredienteItem();
 			ingrediente.setCantidad(niw.getCantidad());
@@ -225,7 +227,7 @@ public class ComponenteReceta extends TablePane implements Bindable {
 	}
 	
 	protected void onEditarIngredienteDialogClosed(Dialog dialog) {
-		EditarIngredienteWindow eiw = (EditarIngredienteWindow) dialog;
+		EditarIngredienteDialog eiw = (EditarIngredienteDialog) dialog;
 		if (!eiw.getCancelado()) {
 			IngredienteItem ingrediente = (IngredienteItem)ingredientesTable.getSelectedRow();
 			ingrediente.setCantidad(eiw.getCantidad());
@@ -237,9 +239,9 @@ public class ComponenteReceta extends TablePane implements Bindable {
 	protected void onAniadirInstruccionButtonPressed() {
 		//recetApp.openNuevaIntruccionWindow();
 		try {
-			nuevaInstruccionWindow = (NuevaInstruccionWindow) RecetApp.loadWindow("/dad/recetapp/ui/NuevaInstruccionWindow.bxml");
-			nuevaInstruccionWindow.setTitle("Nueva instrucción para '" + seccionText.getText() + "'");
-			nuevaInstruccionWindow.open(getWindow(), new DialogCloseListener() {
+			nuevaInstruccionDialog = (NuevaInstruccionDialog) RecetApp.loadWindow("/dad/recetapp/ui/bxml/NuevaInstruccionDialog.bxml");
+			nuevaInstruccionDialog.setTitle("Nueva instrucción para '" + seccionText.getText() + "'");
+			nuevaInstruccionDialog.open(getWindow(), new DialogCloseListener() {
 				public void dialogClosed(Dialog dialog, boolean modal) {
 					onNuevaInstruccionDialogClosed(dialog);
 				}
@@ -259,11 +261,11 @@ public class ComponenteReceta extends TablePane implements Bindable {
 			
 			InstruccionItem instruccion = (InstruccionItem) seleccionados.get(0);
 			
-			editarInstruccionWindow = (EditarInstruccionWindow) RecetApp.loadWindow("/dad/recetapp/ui/EditarInstruccionWindow.bxml");
-			editarInstruccionWindow.setTitle("Editar instrucción para '" + seccionText.getText() + "'");
-			editarInstruccionWindow.setOrden(instruccion.getOrden());
-			editarInstruccionWindow.setDescripcion(instruccion.getDescripcion());
-			editarInstruccionWindow.open(getWindow(), new DialogCloseListener() {
+			editarInstruccionDialog = (EditarInstruccionDialog) RecetApp.loadWindow("/dad/recetapp/ui/bxml/EditarInstruccionDialog.bxml");
+			editarInstruccionDialog.setTitle("Editar instrucción para '" + seccionText.getText() + "'");
+			editarInstruccionDialog.setOrden(instruccion.getOrden());
+			editarInstruccionDialog.setDescripcion(instruccion.getDescripcion());
+			editarInstruccionDialog.open(getWindow(), new DialogCloseListener() {
 				public void dialogClosed(Dialog dialog, boolean modal) {
 					onEditarInstruccionDialogClosed(dialog);
 				}
@@ -315,7 +317,7 @@ public class ComponenteReceta extends TablePane implements Bindable {
 	}
 
 	protected void onNuevaInstruccionDialogClosed(Dialog dialog) {
-		NuevaInstruccionWindow niw = (NuevaInstruccionWindow) dialog;
+		NuevaInstruccionDialog niw = (NuevaInstruccionDialog) dialog;
 		if (!niw.getCancelado()) {
 			InstruccionItem instruccion = new InstruccionItem();
 			instruccion.setDescripcion(niw.getDescripcion());
@@ -325,7 +327,7 @@ public class ComponenteReceta extends TablePane implements Bindable {
 	}
 	
 	protected void onEditarInstruccionDialogClosed(Dialog dialog) {
-		EditarInstruccionWindow niw = (EditarInstruccionWindow) dialog;
+		EditarInstruccionDialog niw = (EditarInstruccionDialog) dialog;
 		if (!niw.getCancelado()) {
 			InstruccionItem instruccion = (InstruccionItem)instruccionesTable.getSelectedRow();
 			instruccion.setDescripcion(niw.getDescripcion());

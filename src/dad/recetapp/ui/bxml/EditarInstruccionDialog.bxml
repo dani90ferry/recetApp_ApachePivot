@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:EditarInstruccionWindow modal="true"
+<ui:EditarInstruccionDialog modal="true"
 	icon="/dad/recetapp/ui/images/logo.png"
 	xmlns:bxml="http://pivot.apache.org/bxml"
 	xmlns:content="org.apache.pivot.wtk.content" xmlns:ui="dad.recetapp.ui"
@@ -52,4 +52,4 @@
 				</TablePane.Row>
 			</TablePane>
 	</FillPane>
-</ui:EditarInstruccionWindow>
+</ui:EditarInstruccionDialog>

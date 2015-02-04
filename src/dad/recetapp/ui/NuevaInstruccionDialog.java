@@ -14,7 +14,7 @@ import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.TextArea;
 import org.apache.pivot.wtk.TextInput;
 
-public class NuevaInstruccionWindow extends Dialog implements Bindable {
+public class NuevaInstruccionDialog extends Dialog implements Bindable {
 	
 	private Boolean cancelado = true;
 
@@ -23,7 +23,7 @@ public class NuevaInstruccionWindow extends Dialog implements Bindable {
 	@BXML private TextInput ordenText;
 	@BXML private TextArea descripcionText;
 
-	private Object cantidad;
+	private Integer orden;
 	
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
@@ -45,7 +45,7 @@ public class NuevaInstruccionWindow extends Dialog implements Bindable {
 	
 	protected void onAnadirButtonButtonPressed() {
 		try {
-		cantidad = Integer.parseInt(ordenText.getText());
+		orden = Integer.parseInt(ordenText.getText());
 		cancelado = false;
 		close();
 		}catch (NumberFormatException e){
@@ -63,7 +63,7 @@ public class NuevaInstruccionWindow extends Dialog implements Bindable {
 	}
 	
 	public Integer getOrden() {
-		return Integer.valueOf(ordenText.getText());
+		return orden;
 	}
 
 	public String getDescripcion() {

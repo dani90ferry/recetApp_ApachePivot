@@ -70,7 +70,6 @@
 						</columns>
 
 						<!-- editor de filas -->
-						<rowEditor>
 							<!-- efectos: HORIZONTAL_SLIDE, VERTICAL_SLIDE, HORIZONTAL_FLIP, VERTICAL_FLIP, 
 								ZOOM, CROSSFADE -->
 							<content:TableViewRowEditor
@@ -96,7 +95,6 @@
 									</categoria>
 								</cellEditors>
 							</content:TableViewRowEditor>
-						</rowEditor>
 					</TableView>
 					<columnHeader>
 						<TableViewHeader tableView="$recetasTable" />

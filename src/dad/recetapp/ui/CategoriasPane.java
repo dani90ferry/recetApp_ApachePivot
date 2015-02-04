@@ -122,14 +122,17 @@ public class CategoriasPane extends TablePane implements Bindable {
 					if (confirmar.getResult() && confirmar.getSelectedOption().equals("Sí")) {
 						for (int i = 0; i < seleccionados.getLength(); i++) {
 							eliminados.add((CategoriaItem) seleccionados.get(i));
-							categorias.remove((CategoriaItem)seleccionados.get(i));
 						}
 						for (CategoriaItem e : eliminados) {
 							try {
 								CategoriaItem c = ServiceLocator.getCategoriasService().obtenerCategoria(e.getId());
 								ServiceLocator.getCategoriasService().eliminarCategoria(c.getId());
+								for (int i = 0; i < seleccionados.getLength(); i++) {
+									categorias.remove((CategoriaItem)seleccionados.get(i));
+								}
 							} catch (ServiceException e1) {
-							
+								Prompt mensaje = new Prompt(e1.getMessage());
+								mensaje.open(getWindow());
 							}
 						}
 					}

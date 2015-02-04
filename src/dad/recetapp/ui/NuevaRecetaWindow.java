@@ -72,7 +72,7 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 				if(selectedIndex == recetasTab.getLength() - 2) {
 					ComponenteReceta c = null;
 					try {
-						c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/ComponenteReceta.bxml");
+						c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/bxml/ComponenteReceta.bxml");
 						c.setRecetApp(recetApp);
 					} catch (IOException | SerializationException e) {
 						// TODO Auto-generated catch block
@@ -104,7 +104,7 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 	private void initRecetasTab() {
 		ComponenteReceta c = null;
 		try {
-			c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/ComponenteReceta.bxml");
+			c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/bxml/ComponenteReceta.bxml");
 			c.setRecetApp(recetApp);
 		} catch (IOException | SerializationException e) {
 			// TODO Auto-generated catch block
@@ -138,7 +138,7 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 			for (InstruccionItem instruccion : comp.getInstrucciones()) {
 				seccion.getInstrucciones().add(instruccion);
 			}
-			receta.getSecciones().add(seccion);
+				receta.getSecciones().add(seccion);
 		}
 		
 		try {

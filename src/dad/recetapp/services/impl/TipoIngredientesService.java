@@ -44,7 +44,7 @@ public class TipoIngredientesService implements ITipoIngredientesService {
 			statement.executeUpdate();
 			statement.close();
 		} catch(SQLException e) {
-			throw new ServiceException("Error al crear el ingrediente '" + 
+			throw new ServiceException("Error al crear el ingrediente " + 
 					tipoIngrediente.getNombre(), e);
 		} catch (NullPointerException e) {
 			throw new ServiceException("Error al modificar el ingrediente: El ingrediente no puede ser nulo", e);
@@ -61,7 +61,7 @@ public class TipoIngredientesService implements ITipoIngredientesService {
 			statement.executeUpdate();
 			statement.close();
 		} catch(SQLException e) {
-			throw new ServiceException("Error al eliminar el ingrediente '" + 
+			throw new ServiceException("Error al eliminar el ingrediente " + 
 					id, e);
 		} catch (NullPointerException e) {
 			throw new ServiceException("Error al eliminar el ingrediente: El ingrediente no puede ser nulo", e);

@@ -21,11 +21,11 @@ import dad.recetapp.services.ServiceLocator;
 import dad.recetapp.services.items.MedidaItem;
 import dad.recetapp.services.items.TipoIngredienteItem;
 
-public class NuevoIngredienteWindow extends Dialog implements Bindable {
+public class EditarIngredienteDialog extends Dialog implements Bindable {
 	private Boolean cancelado = true;
 
 	@BXML private PushButton cancelarButton;
-	@BXML private PushButton anadirButton;
+	@BXML private PushButton guardarButton;
 	@BXML private TextInput cantidadText;
 	@BXML private ListButton medidaListButton;
 	@BXML private ListButton tipoListButton;
@@ -44,7 +44,7 @@ public class NuevoIngredienteWindow extends Dialog implements Bindable {
 			}
 		});
 		
-		anadirButton.getButtonPressListeners().add(new ButtonPressListener() {
+		guardarButton.getButtonPressListeners().add(new ButtonPressListener() {
 			@Override
 			public void buttonPressed(Button button) {
 				onAnadirButtonButtonPressed();
@@ -123,7 +123,6 @@ public class NuevoIngredienteWindow extends Dialog implements Bindable {
 			Prompt mensaje = new Prompt("No se permiten letras o el campo vacio");
 			mensaje.open(this.getWindow());
 		}
-		
 	}
 
 	protected void onCancelarButtonButtonPressed() {
@@ -137,12 +136,24 @@ public class NuevoIngredienteWindow extends Dialog implements Bindable {
 	public Integer getCantidad() {
 		return cantidad;
 	}
+	
+	public void setCantidad(Integer cantidad) {
+		cantidadText.setText("" + cantidad);
+	}
 
 	public MedidaItem getMedidaSelectedItem() {
 		return (MedidaItem) medidaListButton.getSelectedItem();
 	}
 	
+	public void setMedidaSelectedItem(MedidaItem medida) {
+		medidaListButton.setSelectedItem(medida);
+	}
+	
 	public TipoIngredienteItem getTipoSelectedItem() {
 		return (TipoIngredienteItem) tipoListButton.getSelectedItem();
+	}
+	
+	public void setTipoSelectedItem(TipoIngredienteItem medida) {
+		tipoListButton.setSelectedItem(medida);
 	}
 }

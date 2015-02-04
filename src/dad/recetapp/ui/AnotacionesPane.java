@@ -58,7 +58,6 @@ public class AnotacionesPane extends TablePane implements Bindable {
 				try {
 					onAnadirButtonPressed();
 				} catch (ServiceException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

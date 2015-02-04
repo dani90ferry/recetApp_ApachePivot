@@ -122,14 +122,17 @@ public class MedidasPane extends TablePane implements Bindable {
 					if (confirmar.getResult() && confirmar.getSelectedOption().equals("Sí")) {
 						for (int i = 0; i < seleccionados.getLength(); i++) {
 							eliminados.add((MedidaItem) seleccionados.get(i));
-							medidas.remove((MedidaItem)seleccionados.get(i));
 						}
 						for (MedidaItem e : eliminados) {
 							try {
 								MedidaItem c = ServiceLocator.getMedidasService().obtenerMedida(e.getId());
 								ServiceLocator.getMedidasService().eliminarMedida(c.getId());
+								for (int i = 0; i < seleccionados.getLength(); i++) {
+									medidas.remove((MedidaItem)seleccionados.get(i));
+								}
 							} catch (ServiceException e1) {
-							
+								Prompt mensaje = new Prompt(e1.getMessage());
+								mensaje.open(getWindow());
 							}
 						}
 					}

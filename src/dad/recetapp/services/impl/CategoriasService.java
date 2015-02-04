@@ -61,7 +61,7 @@ public class CategoriasService implements ICategoriasService {
 			statement.executeUpdate();
 			statement.close();
 		} catch(SQLException e) {
-			throw new ServiceException("Error al eliminar la categoría '" + 
+			throw new ServiceException("Error al eliminar la categoría " + 
 					id, e);
 		} catch (NullPointerException e) {
 			throw new ServiceException("Error al eliminar la categoría: La categoría no puede ser nula", e);

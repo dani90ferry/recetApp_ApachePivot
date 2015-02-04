@@ -28,7 +28,7 @@ public class MedidasService implements IMedidasService {
 			statement.executeUpdate();
 			statement.close();
 		} catch (SQLException e) {
-			throw new ServiceException("Error al crear la medida '" + 
+			throw new ServiceException("Error al crear la medida " + 
 					medida.getNombre(), e);
 		} catch (NullPointerException e) {
 			throw new ServiceException("Error al crear la medida: La medida no puede ser nula", e);
@@ -47,7 +47,7 @@ public class MedidasService implements IMedidasService {
 			statement.executeUpdate();
 			statement.close();
 		} catch(SQLException e) {
-			throw new ServiceException("Error al modificar la medida '" + 
+			throw new ServiceException("Error al modificar la medida " + 
 					medida.getNombre(), e);
 		} catch (NullPointerException e) {
 			throw new ServiceException("Error al modificar la medida: La medida no puede ser nula", e);
@@ -63,7 +63,7 @@ public class MedidasService implements IMedidasService {
 			statement.executeUpdate();
 			statement.close();
 		} catch(SQLException e) {
-			throw new ServiceException("Error al eliminar la medida '" + 
+			throw new ServiceException("Error al eliminar la medida " + 
 					id, e);
 		} catch (NullPointerException e) {
 			throw new ServiceException("Error al eliminar la medida: La medida no puede ser nula", e);
