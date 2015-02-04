@@ -68,7 +68,8 @@ public class MedidasPane extends TablePane implements Bindable {
 		try {
 			ServiceLocator.getMedidasService().modificarMedida(c);
 		} catch (ServiceException e) {
-			
+			Prompt mensaje = new Prompt(e.getMessage());
+			mensaje.open(this.getWindow());
 		}
 	}
 
@@ -79,7 +80,8 @@ public class MedidasPane extends TablePane implements Bindable {
 				medidas.add(c);
 			}
 		} catch (ServiceException e) {
-			
+			Prompt mensaje = new Prompt(e.getMessage());
+			mensaje.open(this.getWindow());
 		}
 	}
 	
@@ -90,11 +92,12 @@ public class MedidasPane extends TablePane implements Bindable {
 			nueva.setAbreviatura(abreviaturaText.getText());
 			try {
 				ServiceLocator.getMedidasService().crearMedida(nueva);
+				medidas.add(nueva);
 			} catch (ServiceException e) {
-			
+				Prompt mensaje = new Prompt(e.getMessage());
+				mensaje.open(this.getWindow());
 			}
-			medidas.add(nueva);
-			//TODO IMPORTANTE
+			//Recargar tabla
 			medidas.clear();
 			initMedidasTable();
 			nombreText.setText("");

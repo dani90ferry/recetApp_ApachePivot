@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ui:ComponenteReceta xmlns:bxml="http://pivot.apache.org/bxml"
-	xmlns:content="org.apache.pivot.wtk.content" xmlns:ui="dad.recetapp.ui"
+	xmlns:content="org.apache.pivot.wtk.content"
+	xmlns:ui="dad.recetapp.ui"
 	xmlns="org.apache.pivot.wtk">
 
 		<columns>

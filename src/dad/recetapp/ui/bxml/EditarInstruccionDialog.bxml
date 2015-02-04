@@ -13,12 +13,12 @@
 					<Form>
 						<Form.Section>
 							<FillPane Form.label="Orden">
-								<TextInput bxml:id="ordenText" prompt="Orden"></TextInput>
+								<TextInput bxml:id="ordenText" prompt="Orden" preferredWidth="230"></TextInput>
 							</FillPane>
 							<BoxPane Form.label="Descripción">
 								<Border>
 									<ScrollPane horizontalScrollBarPolicy="FILL_TO_CAPACITY">
-										<TextArea bxml:id="descripcionText" minimumHeight="80" minimumWidth="180"></TextArea>
+										<TextArea bxml:id="descripcionText" minimumHeight="80" minimumWidth="230"></TextArea>
 									</ScrollPane>
 								</Border>
 							</BoxPane>

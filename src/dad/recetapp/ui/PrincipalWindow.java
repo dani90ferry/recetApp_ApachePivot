@@ -13,7 +13,7 @@ import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
 
 public class PrincipalWindow extends Window implements Bindable {
-	private RecetApp recetApp;
+//	private RecetApp recetApp;
 	
 	@BXML private RecetasPane recetasPane;
 	@BXML private Label numRecetas;
@@ -29,7 +29,7 @@ public class PrincipalWindow extends Window implements Bindable {
 	}
 
 	public void setRecetApp(RecetApp recetApp) {
-		this.recetApp = recetApp;
+//		this.recetApp = recetApp;
 		recetasPane.setWindowsApp(recetApp);
 	}
 	

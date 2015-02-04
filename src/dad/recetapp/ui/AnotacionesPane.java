@@ -34,8 +34,7 @@ public class AnotacionesPane extends TablePane implements Bindable {
 	@BXML private PushButton eliminarButton;
 
 	@Override
-	public void initialize(Map<String, Object> namespace, URL location,
-			Resources resources) {
+	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		anotaciones = new ArrayList<TipoAnotacionItem>();
 		anotacionesTable.setTableData(anotaciones);
 		anotacionesTable.getTableViewRowListeners().add(new TableViewRowListener.Adapter() {
@@ -45,6 +44,7 @@ public class AnotacionesPane extends TablePane implements Bindable {
 				super.rowUpdated(tableView, index);
 			}
 		});
+		
 		initAnotacionesTable();
 
 		eliminarButton.getButtonPressListeners().add(new ButtonPressListener() {
@@ -69,7 +69,8 @@ public class AnotacionesPane extends TablePane implements Bindable {
 		try {
 			ServiceLocator.getTiposAnotacionesService().modificarTipoAnotacion(c);
 		} catch (ServiceException e) {
-			
+			Prompt mensaje = new Prompt(e.getMessage());
+			mensaje.open(this.getWindow());
 		}
 	}
 
@@ -81,7 +82,8 @@ public class AnotacionesPane extends TablePane implements Bindable {
 				anotaciones.add(anot);
 			}
 		} catch (ServiceException e) {
-			
+			Prompt mensaje = new Prompt(e.getMessage());
+			mensaje.open(this.getWindow());
 		}
 	}
 
@@ -109,7 +111,8 @@ public class AnotacionesPane extends TablePane implements Bindable {
 								TipoAnotacionItem c = ServiceLocator.getTiposAnotacionesService().obtenerTipoAnotacion(e.getId());
 								ServiceLocator.getTiposAnotacionesService().eliminarTipoAnotacion(c.getId());
 							} catch (ServiceException e1) {
-							
+								Prompt mensaje = new Prompt(e1.getMessage());
+								mensaje.open(getWindow());
 							}
 						}
 					}
@@ -128,13 +131,13 @@ public class AnotacionesPane extends TablePane implements Bindable {
 			
 			}
 			anotaciones.add(nueva);
-			//TODO IMPORTANTE
+			//Recargar la tabla
 			anotaciones.clear();
 			initAnotacionesTable();
 			descripcionText.setText("");
 		}
 		else {
-			Prompt mensaje = new Prompt("Descripción no puede ser vacía");
+			Prompt mensaje = new Prompt("Campo descripción vacío");
 			mensaje.open(this.getWindow());
 		}
 	}

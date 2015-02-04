@@ -67,7 +67,8 @@ public class CategoriasPane extends TablePane implements Bindable {
 		try {
 			ServiceLocator.getCategoriasService().modificarCategoria(c);
 		} catch (ServiceException e) {
-			
+			Prompt mensaje = new Prompt(e.getMessage());
+			mensaje.open(this.getWindow());
 		}
 	}
 
@@ -78,7 +79,8 @@ public class CategoriasPane extends TablePane implements Bindable {
 				categorias.add(c);
 			}
 		} catch (ServiceException e) {
-			
+			Prompt mensaje = new Prompt(e.getMessage());
+			mensaje.open(this.getWindow());
 		}
 	}
 
@@ -92,7 +94,7 @@ public class CategoriasPane extends TablePane implements Bindable {
 			
 			}
 			categorias.add(nueva);
-			//TODO IMPORTANTE
+			//Recargar la tabla
 			categorias.clear();
 			initCategoriasTable();
 			descripcionText.setText("");
@@ -102,8 +104,6 @@ public class CategoriasPane extends TablePane implements Bindable {
 			mensaje.open(this.getWindow());
 		}
 	}
-	
-	//TODO Comprobar si se puede simplificar la eliminación (último bucle for) Fijarse en el eliminar de recetasPane
 
 	protected void onEliminarButtonPressed() {
 		StringBuffer mensaje = new StringBuffer();

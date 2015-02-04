@@ -42,14 +42,13 @@ public class NuevaInstruccionDialog extends Dialog implements Bindable {
 		});
 	}
 
-	
 	protected void onAnadirButtonButtonPressed() {
 		try {
 		orden = Integer.parseInt(ordenText.getText());
 		cancelado = false;
 		close();
 		}catch (NumberFormatException e){
-			Prompt mensaje = new Prompt("No se permiten letras o el campo orden vacio");
+			Prompt mensaje = new Prompt("Error en el campo orden.");
 			mensaje.open(this.getWindow());
 		}
 	}

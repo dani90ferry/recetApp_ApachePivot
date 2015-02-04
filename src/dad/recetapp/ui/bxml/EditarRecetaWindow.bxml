@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:EditarRecetaWindow title="RecetApp" maximized="true"
 	icon="/dad/recetapp/ui/images/logo.png"
-	xmlns:bxml="http://pivot.apache.org/bxml" xmlns:content="org.apache.pivot.wtk.content"
-	xmlns:ui="dad.recetapp.ui" xmlns="org.apache.pivot.wtk">
+	xmlns:bxml="http://pivot.apache.org/bxml" 
+	xmlns:content="org.apache.pivot.wtk.content"
+	xmlns:ui="dad.recetapp.ui" 
+	xmlns="org.apache.pivot.wtk">
 	
 	<FillPane orientation="vertical">
 		<Border styles="{padding:5}">

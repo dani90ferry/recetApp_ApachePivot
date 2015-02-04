@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:EditarIngredienteDialog title="Editar ingrediente" modal="true"
+<ui:EditarIngredienteDialog modal="true"
 	icon="/dad/recetapp/ui/images/logo.png"
-	xmlns:bxml="http://pivot.apache.org/bxml" xmlns:content="org.apache.pivot.wtk.content"
-	xmlns:ui="dad.recetapp.ui" xmlns="org.apache.pivot.wtk">
+	xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns:content="org.apache.pivot.wtk.content"
+	xmlns:ui="dad.recetapp.ui"
+	xmlns="org.apache.pivot.wtk">
 	
 	<FillPane>
 		<TablePane>
@@ -13,13 +15,13 @@
 				<Form>
 					<Form.Section>
 						<FillPane Form.label="Cantidad">
-							<TextInput bxml:id="cantidadText" prompt="cantidad"></TextInput>
+							<TextInput bxml:id="cantidadText" prompt="cantidad" preferredWidth="230"></TextInput>
 						</FillPane>
 						<FillPane Form.label="Medida">
-							<ListButton bxml:id="medidaListButton"/>
+							<ListButton bxml:id="medidaListButton" preferredWidth="230"/>
 						</FillPane>
 						<FillPane Form.label="Tipo">
-							<ListButton bxml:id="tipoListButton"/>
+							<ListButton bxml:id="tipoListButton" preferredWidth="230"/>
 						</FillPane>
 					</Form.Section>
 				</Form>

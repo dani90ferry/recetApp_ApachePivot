@@ -62,8 +62,8 @@ public class NuevoIngredienteDialog extends Dialog implements Bindable {
 			medidaListButton.setListData(convertirListMedida(aux));
 			medidaListButton.setSelectedIndex(0);
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Prompt mensaje = new Prompt(e.getMessage());
+			mensaje.open(this.getWindow());
 		}
 	}
 	
@@ -85,8 +85,8 @@ public class NuevoIngredienteDialog extends Dialog implements Bindable {
 			tipoListButton.setListData(convertirListTipo(aux));
 			tipoListButton.setSelectedIndex(0);
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Prompt mensaje = new Prompt(e.getMessage());
+			mensaje.open(this.getWindow());
 		}
 	}
 	
@@ -101,26 +101,30 @@ public class NuevoIngredienteDialog extends Dialog implements Bindable {
 	protected void onAnadirButtonButtonPressed() {
 		Boolean error = false;
 		try {
-		cantidad = Integer.parseInt(cantidadText.getText());
-		if(medidaListButton.getSelectedIndex() == 0) {
-			Prompt mensaje = new Prompt("Debes seleccionar una medida");
-			mensaje.open(this.getWindow());
-			error = true;
-		}
+			StringBuffer mensajeError = new StringBuffer();
+			cantidad = Integer.parseInt(cantidadText.getText());
+			if(medidaListButton.getSelectedIndex() == 0) {
+				mensajeError.append("Debes seleccionar una medida\n");
+				error = true;
+			}
+	
+			if(tipoListButton.getSelectedIndex() == 0) {
+				mensajeError.append("Debes seleccionar un tipo ingrediente");
+				error = true;
+			}
+			
+			if(mensajeError.length() != 0) {
+				Prompt mensaje = new Prompt(mensajeError.toString());
+				mensaje.open(this.getWindow());
+			}
 		
-		if(tipoListButton.getSelectedIndex() == 0) {
-			Prompt mensaje = new Prompt("Debes seleccionar un tipo ingrediente");
-			mensaje.open(this.getWindow());
-			error = true;
-		}
-		
-		if(!error){
-			cancelado = false;
-			close();
-		}
+			if(!error){
+				cancelado = false;
+				close();
+			}
 		
 		}catch (NumberFormatException e){
-			Prompt mensaje = new Prompt("No se permiten letras o el campo vacio");
+			Prompt mensaje = new Prompt("Error en el campo cantidad");
 			mensaje.open(this.getWindow());
 		}
 		

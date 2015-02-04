@@ -28,7 +28,6 @@ import dad.recetapp.services.items.TipoIngredienteItem;
 public class IngredientesPane extends TablePane implements Bindable {
 	private List<TipoIngredienteItem> tipoIngredientes;
 	
-	
 	@BXML private TableView ingredientesTable;
 	@BXML private TextInput nombreText;
 	@BXML private PushButton aniadirButton;
@@ -68,7 +67,8 @@ public class IngredientesPane extends TablePane implements Bindable {
 		try {
 			ServiceLocator.getTiposIngredienteService().modificarTipoIngrediente(c);
 		} catch (ServiceException e) {
-			
+			Prompt mensaje = new Prompt(e.getMessage());
+			mensaje.open(getWindow());
 		}
 	}
 
@@ -79,7 +79,8 @@ public class IngredientesPane extends TablePane implements Bindable {
 				tipoIngredientes.add(c);
 			}
 		} catch (ServiceException e) {
-			
+			Prompt mensaje = new Prompt(e.getMessage());
+			mensaje.open(getWindow());
 		}
 	}
 	
@@ -89,17 +90,18 @@ public class IngredientesPane extends TablePane implements Bindable {
 			nueva.setNombre(nombreText.getText());
 			try {
 				ServiceLocator.getTiposIngredienteService().crearTipoIngrediente(nueva);
-			} catch (ServiceException e) {
-			
-			}
 				tipoIngredientes.add(nueva);
-			//TODO IMPORTANTE
-				tipoIngredientes.clear();
-				initIngredientesTable();
-				nombreText.setText("");
+			} catch (ServiceException e) {
+				Prompt mensaje = new Prompt(e.getMessage());
+				mensaje.open(getWindow());
+			}
+			//Recargar la tabla
+			tipoIngredientes.clear();
+			initIngredientesTable();
+			nombreText.setText("");
 		}
 		else {
-			Prompt mensaje = new Prompt("Nombre no puede ser vací");
+			Prompt mensaje = new Prompt("Campo nombre vacío");
 			mensaje.open(this.getWindow());
 		}
 	}

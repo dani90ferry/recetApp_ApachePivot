@@ -3,15 +3,12 @@ package dad.recetapp.ui;
 import java.io.IOException;
 import java.net.URL;
 
-import javafx.scene.control.Tab;
-
 import org.apache.pivot.beans.BXML;
 import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
-import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.util.Vote;
@@ -19,6 +16,7 @@ import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ListButton;
+import org.apache.pivot.wtk.Prompt;
 import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.Spinner;
 import org.apache.pivot.wtk.TabPane;
@@ -69,23 +67,27 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 		recetasTab.getTabPaneSelectionListeners().add(new TabPaneSelectionListener.Adapter() {
 			@Override
 			public Vote previewSelectedIndexChange(TabPane tabPane, int selectedIndex) {
-				if(selectedIndex == recetasTab.getLength() - 2) {
-					ComponenteReceta c = null;
-					try {
-						c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/bxml/ComponenteReceta.bxml");
-						c.setRecetApp(recetApp);
-					} catch (IOException | SerializationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-					recetasTab.getTabs().insert(c, recetasTab.getLength() - 2);
-					recetasTab.setSelectedIndex(recetasTab.getLength() - 3);
-				}
+				onRecetasTabPreviewSelectedIndexChange(tabPane, selectedIndex);
 				return super.previewSelectedIndexChange(tabPane, selectedIndex);
 			}
 		});
 	}
 	
+	protected void onRecetasTabPreviewSelectedIndexChange(TabPane tabPane, int selectedIndex) {
+		if(selectedIndex == recetasTab.getLength() - 2) {
+			ComponenteReceta c = null;
+			try {
+				c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/bxml/ComponenteReceta.bxml");
+				c.setRecetApp(recetApp);
+			} catch (IOException | SerializationException e) {
+				Prompt mensaje = new Prompt(e.getMessage());
+				mensaje.open(this.getWindow());
+			} 
+			recetasTab.getTabs().insert(c, recetasTab.getLength() - 2);
+			recetasTab.setSelectedIndex(recetasTab.getLength() - 3);
+		}
+	}
+
 	private void initCategoriaListButton() {
 		java.util.List<CategoriaItem> aux;
 		try {
@@ -96,8 +98,8 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 			categoriaListButton.setListData(convertirList(aux));
 			categoriaListButton.setSelectedIndex(0);
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Prompt mensaje = new Prompt(e.getMessage());
+			mensaje.open(this.getWindow());
 		}
 	}
 	
@@ -107,50 +109,59 @@ public class NuevaRecetaWindow extends Window implements Bindable{
 			c = (ComponenteReceta) loadComponent("/dad/recetapp/ui/bxml/ComponenteReceta.bxml");
 			c.setRecetApp(recetApp);
 		} catch (IOException | SerializationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Prompt mensaje = new Prompt("Error en el campo orden.");
+			mensaje.open(this.getWindow());
 		} 
 		recetasTab.getTabs().insert(c, 0);
 		recetasTab.setSelectedIndex(0);
 	}
 	
 	protected void onCrearButtonPressed() {
-		RecetaItem receta = new RecetaItem();
-		receta.setNombre(nombreText.getText());
-		receta.setCantidad(Integer.valueOf(cantidadText.getText()));
-		receta.setPara((String) paraListButton.getSelectedItem());
-		receta.setTiempoTotal(tTotalMSpinner.getSelectedIndex() * 60 + tTotalSSpinner.getSelectedIndex());
-		receta.setTiempoThermomix(tThermoMSpinner.getSelectedIndex() * 60 + tThermoSSpinner.getSelectedIndex());
-		receta.setCategoria((CategoriaItem)categoriaListButton.getSelectedItem());
-		
-		TabSequence tabs = recetasTab.getTabs();
-		//Se utiliza en vez de un for-each para evitar que intente utilizar la pestaña +
-		for(int i = 0; i < tabs.getLength() - 1; i++) {
-//			System.out.println(((ComponenteReceta)tabs.get(i)).getSeccion());
-			ComponenteReceta comp = (ComponenteReceta)tabs.get(i);
-			SeccionItem seccion = new SeccionItem();
-			seccion.setNombre(comp.getSeccion());
-			//Añadimos a la seccion los ingredientes de la tabla del componete
-			for (IngredienteItem ingrediente : comp.getIngredientes()) {
-				seccion.getIngredientes().add(ingrediente);
-			}
-			//Añadimos a la seccion las instrucciones de la tabla del componete
-			for (InstruccionItem instruccion : comp.getInstrucciones()) {
-				seccion.getInstrucciones().add(instruccion);
-			}
-				receta.getSecciones().add(seccion);
-		}
-		
 		try {
-			ServiceLocator.getRecetasService().crearReceta(receta);
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Integer cantidad = Integer.parseInt(cantidadText.getText());
+			
+			if(categoriaListButton.getSelectedIndex() == 0) {
+				Prompt mensaje = new Prompt("Debe seleccionar una categoría");
+				mensaje.open(this.getWindow());
+			}
+			else {
+				RecetaItem receta = new RecetaItem();
+				receta.setNombre(nombreText.getText());
+				receta.setCantidad(cantidad);
+				receta.setPara((String) paraListButton.getSelectedItem());
+				receta.setTiempoTotal(tTotalMSpinner.getSelectedIndex() * 60 + tTotalSSpinner.getSelectedIndex());
+				receta.setTiempoThermomix(tThermoMSpinner.getSelectedIndex() * 60 + tThermoSSpinner.getSelectedIndex());
+				receta.setCategoria((CategoriaItem)categoriaListButton.getSelectedItem());
+			
+				TabSequence tabs = recetasTab.getTabs();
+				//tabs.getLenght() - 1 para que no tenga en cuenta la pestaña +
+				for(int i = 0; i < tabs.getLength() - 1; i++) {
+					ComponenteReceta comp = (ComponenteReceta)tabs.get(i);
+					SeccionItem seccion = new SeccionItem();
+					seccion.setNombre(comp.getSeccion());
+					//Añadimos a la seccion los ingredientes de la tabla del componete
+					for (IngredienteItem ingrediente : comp.getIngredientes()) {
+						seccion.getIngredientes().add(ingrediente);
+					}
+					//Añadimos a la seccion las instrucciones de la tabla del componete
+					for (InstruccionItem instruccion : comp.getInstrucciones()) {
+						seccion.getInstrucciones().add(instruccion);
+					}
+				receta.getSecciones().add(seccion);
+				}
+				try {
+					ServiceLocator.getRecetasService().crearReceta(receta);
+				} catch (ServiceException e) {
+					Prompt mensaje = new Prompt("Error al crear la receta.");
+					mensaje.open(this.getWindow());
+				}
+				close();
+				recetApp.getPrincipalWindow().getRecetasPane().actualizarTabla();
+			}
+		} catch(NumberFormatException e) {
+			Prompt mensaje = new Prompt("Error en el campo para.");
+			mensaje.open(this.getWindow());
 		}
-		
-		close();
-		recetApp.getPrincipalWindow().getRecetasPane().actualizarTabla();
-		//TODO cuando añades una receta no se carga en la tabla recetas
 	}
 
 	protected void onCancelarButtonPressed() {

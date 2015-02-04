@@ -1,22 +1,6 @@
 package dad.recetapp.ui;
 
-import java.io.IOException;
 import java.net.URL;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import org.apache.pivot.beans.BXML;
 import org.apache.pivot.beans.Bindable;
@@ -24,15 +8,11 @@ import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.collections.Sequence;
-import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
-import org.apache.pivot.wtk.ButtonStateListener;
 import org.apache.pivot.wtk.Component;
-import org.apache.pivot.wtk.ComponentDataListener;
 import org.apache.pivot.wtk.ComponentKeyListener;
-import org.apache.pivot.wtk.ComponentStateListener;
 import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.ListButtonSelectionListener;
 import org.apache.pivot.wtk.MessageType;
@@ -45,13 +25,6 @@ import org.apache.pivot.wtk.SpinnerSelectionListener;
 import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TextInput;
-
-
-
-
-
-
-import org.apache.pivot.wtk.Button.State;
 
 import dad.recetapp.services.ServiceException;
 import dad.recetapp.services.ServiceLocator;
@@ -242,12 +215,6 @@ public class RecetasPane extends TablePane implements Bindable {
 				}
 			});
 		}
-		//Recargar la tabla
-//		No sirve
-//		recetas.clear();
-//		initRecetasTable();
-		//Actualizar el número de recetas
-		
 	}
 	
 	protected void onAniadirButtonPressed() {
